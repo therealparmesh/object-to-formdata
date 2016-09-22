@@ -1,6 +1,6 @@
 {
   "name": "object-to-formdata",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A convenient client-side JavaScript function to create a FormData instance from the key-value pairs of an Object instance.",
   "main": "index.js",
   "scripts": {
