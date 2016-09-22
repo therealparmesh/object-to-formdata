@@ -1,0 +1,26 @@
+{
+  "name": "object-to-formdata",
+  "version": "1.0.0",
+  "description": "A convenient client-side JavaScript function to create a FormData instance from the key-value pairs of an Object instance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therealparmesh/object-to-formdata.git"
+  },
+  "keywords": [
+    "javascript",
+    "object",
+    "formdata",
+    "form",
+    "submit"
+  ],
+  "author": "Parmesh Krishen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/therealparmesh/object-to-formdata/issues"
+  },
+  "homepage": "https://github.com/therealparmesh/object-to-formdata#readme"
+}
