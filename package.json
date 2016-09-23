@@ -1,6 +1,6 @@
 {
   "name": "object-to-formdata",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A convenient client-side JavaScript function to create a FormData instance from the key-value pairs of an Object instance.",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,7 @@
     "url": "git+https://github.com/therealparmesh/object-to-formdata.git"
   },
   "keywords": [
+    "object-to-formdata",
     "javascript",
     "object",
     "formdata",
