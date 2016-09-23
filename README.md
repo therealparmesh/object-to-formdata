@@ -3,5 +3,6 @@
 
 ```
 var objectToFormData = require('object-to-formdata');
-objectToFormData({ /* key-value pairs */ });
+var object = { /* key-value pairs (values can be primitives or objects) */ };
+var formData = objectToFormData(object);
 ```
