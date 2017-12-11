@@ -26,6 +26,8 @@ function objectToFormData (obj, fd, pre) {
   Object.keys(obj).forEach(function (prop) {
     var key = pre ? (pre + '[' + prop + ']') : prop
 
+    if (obj[prop] === null || obj[prop] === undefined) return;
+
     if (isObject(obj[prop]) && !isArray(obj[prop]) && !isFile(obj[prop])) {
       objectToFormData(obj[prop], fd, key)
     } else if (isArray(obj[prop])) {
