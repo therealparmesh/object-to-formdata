@@ -12,6 +12,10 @@ function isFile (value) {
   return value instanceof File
 }
 
+function isUndefined (value) {
+  return value === undefined
+}
+
 function makeArrayKey (key) {
   if (key.length > 2 && key.lastIndexOf('[]') === key.length - 2) {
     return key
@@ -25,6 +29,8 @@ function objectToFormData (obj, fd, pre) {
 
   Object.keys(obj).forEach(function (prop) {
     var key = pre ? (pre + '[' + prop + ']') : prop
+
+    if (isUndefined(obj[prop])) return;
 
     if (isObject(obj[prop]) && !isArray(obj[prop]) && !isFile(obj[prop])) {
       objectToFormData(obj[prop], fd, key)
