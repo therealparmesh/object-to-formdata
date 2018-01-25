@@ -16,7 +16,7 @@ function makeArrayKey (key) {
   if (key.length > 2 && key.lastIndexOf('[]') === key.length - 2) {
     return key
   } else {
-    return key + '[]'
+    return key
   }
 }
 
