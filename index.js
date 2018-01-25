@@ -32,7 +32,7 @@ function objectToFormData (obj, fd, pre) {
       obj[prop].forEach(function (value) {
         var arrayKey = makeArrayKey(key)
 
-        if (isObject(value) && !isFile(value)) {
+        if (isObject(value) && !isFile(value) && !(value instanceof Date)) {
           objectToFormData(value, fd, arrayKey)
         } else {
           fd.append(arrayKey, value)
