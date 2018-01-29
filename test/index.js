@@ -97,6 +97,20 @@ test('File', t => {
   t.is(formData.get('foo'), foo)
 })
 
+test('Date', t => {
+  const foo = new Date()
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo
+  ])
+  t.is(formData.get('foo'), foo.toString())
+})
+
 test('Object', t => {
   const formData = objectToFormData({
     foo: {

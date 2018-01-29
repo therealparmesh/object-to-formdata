@@ -16,6 +16,10 @@ function isFile (value) {
   return value instanceof File
 }
 
+function isDate (value) {
+  return value instanceof Date
+}
+
 function objectToFormData (obj, fd, pre) {
   fd = fd || new FormData()
 
@@ -27,7 +31,7 @@ function objectToFormData (obj, fd, pre) {
 
       objectToFormData(value, fd, key)
     })
-  } else if (isObject(obj) && !isFile(obj)) {
+  } else if (isObject(obj) && !isFile(obj) && !isDate(obj)) {
     Object.keys(obj).forEach(function (prop) {
       var value = obj[prop]
 
