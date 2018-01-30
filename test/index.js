@@ -70,6 +70,19 @@ test('number', t => {
   t.is(formData.get('foo'), '1')
 })
 
+test('not a number', t => {
+  const formData = objectToFormData({
+    foo: NaN
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    NaN
+  ])
+  t.is(formData.get('foo'), 'NaN')
+})
+
 test('string', t => {
   const formData = objectToFormData({
     foo: 'bar'
@@ -81,6 +94,19 @@ test('string', t => {
     'bar'
   ])
   t.is(formData.get('foo'), 'bar')
+})
+
+test('empty string', t => {
+  const formData = objectToFormData({
+    foo: ''
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    ''
+  ])
+  t.is(formData.get('foo'), '')
 })
 
 test('File', t => {
