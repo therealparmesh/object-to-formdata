@@ -30,7 +30,8 @@
   "standard": {
     "globals": [
       "FormData",
-      "File"
+      "File",
+      "Blob"
     ]
   }
 }

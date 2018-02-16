@@ -12,8 +12,8 @@ function isArray (value) {
   return Array.isArray(value)
 }
 
-function isFile (value) {
-  return value instanceof File
+function isBlob (value) {
+  return value instanceof Blob
 }
 
 function isDate (value) {
@@ -31,7 +31,7 @@ function objectToFormData (obj, fd, pre) {
 
       objectToFormData(value, fd, key)
     })
-  } else if (isObject(obj) && !isFile(obj) && !isDate(obj)) {
+  } else if (isObject(obj) && !isBlob(obj) && !isDate(obj)) {
     Object.keys(obj).forEach(function (prop) {
       var value = obj[prop]
 

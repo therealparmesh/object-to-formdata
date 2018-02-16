@@ -16,6 +16,7 @@ global.FormData = class FormData {
   }
 }
 global.File = global.window.File
+global.Blob = global.window.Blob
 
 test('undefined', t => {
   const formData = objectToFormData({
@@ -121,6 +122,21 @@ test('File', t => {
     foo
   ])
   t.is(formData.get('foo'), foo)
+})
+
+test('Blob', t => {
+  const foo = new Blob([], {})
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo
+  ])
+
+  t.true(formData.get('foo') instanceof File)
 })
 
 test('Date', t => {
