@@ -8,8 +8,17 @@ function isArray (value) {
   return Array.isArray(value)
 }
 
+function isBlob (value) {
+  return value != null
+      && typeof value.size === 'number'
+      && typeof value.type === 'string'
+      && typeof value.slice === 'function'
+}
+
 function isFile (value) {
-  return value instanceof File
+  return isBlob(value)
+      && typeof value.lastModified === 'number'
+      && typeof value.name === 'string'
 }
 
 function isUndefined (value) {
