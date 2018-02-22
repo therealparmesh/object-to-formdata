@@ -1,13 +1,12 @@
 # object-to-formdata
-  A convenient client-side JavaScript function to create a FormData instance from the key-value pairs of an Object instance.
+A convenient JavaScript function that converts an object to a FormData instance
 
-```
+```js
 const objectToFormData = require('object-to-formdata')
-
 
 const object = {
   /**
-   * key-value pairs
+   * key-value mapping
    * values can be primitives or objects
    */
 }

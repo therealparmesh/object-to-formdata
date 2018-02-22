@@ -25,38 +25,39 @@ function isUndefined (value) {
   return value === undefined
 }
 
-function makeArrayKey (key) {
-  if (key.length > 2 && key.lastIndexOf('[]') === key.length - 2) {
-    return key
-  } else {
-    return key + '[]'
-  }
+function isDate (value) {
+  return value instanceof Date
 }
+
 
 function objectToFormData (obj, fd, pre) {
   fd = fd || new FormData()
 
-  Object.keys(obj).forEach(function (prop) {
-    var key = pre ? (pre + '[' + prop + ']') : prop
+  if (isUndefined(obj)) {
+    return fd
+  } else if (isArray(obj)) {
+    obj.forEach(function (value) {
+      var key = pre + '[]'
 
-    if (isUndefined(obj[prop])) return;
+      objectToFormData(value, fd, key)
+    })
+  } else if (isObject(obj) && !isFile(obj) && !isDate(obj)) {
+    Object.keys(obj).forEach(function (prop) {
+      var value = obj[prop]
 
-    if (isObject(obj[prop]) && !isArray(obj[prop]) && !isFile(obj[prop])) {
-      objectToFormData(obj[prop], fd, key)
-    } else if (isArray(obj[prop])) {
-      obj[prop].forEach(function (value) {
-        var arrayKey = makeArrayKey(key)
-
-        if (isObject(value) && !isFile(value)) {
-          objectToFormData(value, fd, arrayKey)
-        } else {
-          fd.append(arrayKey, value)
+      if (isArray(value)) {
+        while (prop.length > 2 && prop.lastIndexOf('[]') === prop.length - 2) {
+          prop = prop.substring(0, prop.length - 2)
         }
-      })
-    } else {
-      fd.append(key, obj[prop])
-    }
-  })
+      }
+
+      var key = pre ? (pre + '[' + prop + ']') : prop
+
+      objectToFormData(value, fd, key)
+    })
+  } else {
+    fd.append(pre, obj)
+  }
 
   return fd
 }

@@ -1,15 +1,14 @@
 {
   "name": "object-to-formdata",
-  "version": "1.0.13",
-  "description": "A convenient client-side JavaScript function to create a FormData instance from the key-value pairs of an Object instance.",
+  "version": "1.2.2",
+  "description": "A convenient JavaScript function that converts an object to a FormData instance",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc ava",
+    "test:watch": "ava --watch",
+    "lint": "standard --fix"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/therealparmesh/object-to-formdata.git"
-  },
+  "repository": "therealparmesh/object-to-formdata",
   "keywords": [
     "object-to-formdata",
     "javascript",
@@ -20,8 +19,18 @@
   ],
   "author": "Parmesh Krishen",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/therealparmesh/object-to-formdata/issues"
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "formdata-polyfill": "^3.0.9",
+    "jsdom": "^11.6.1",
+    "nyc": "^11.4.1",
+    "sinon": "^4.2.2",
+    "standard": "^10.0.3"
   },
-  "homepage": "https://github.com/therealparmesh/object-to-formdata#readme"
+  "standard": {
+    "globals": [
+      "FormData",
+      "File"
+    ]
+  }
 }
