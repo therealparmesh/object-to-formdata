@@ -1,7 +1,7 @@
 {
   "name": "object-to-formdata",
   "version": "1.2.2",
-  "description": "A convenient JavaScript function that converts an object to a FormData instance.",
+  "description": "A convenient JavaScript function that converts an object to a FormData instance",
   "main": "index.js",
   "scripts": {
     "test": "nyc ava",
@@ -22,10 +22,10 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "formdata-polyfill": "^3.0.9",
-    "jsdom": "^11.6.1",
+    "jsdom": "^11.6.2",
     "nyc": "^11.4.1",
-    "sinon": "^4.2.2",
-    "standard": "^10.0.3"
+    "sinon": "^4.3.0",
+    "standard": "^11.0.0"
   },
   "standard": {
     "globals": [
