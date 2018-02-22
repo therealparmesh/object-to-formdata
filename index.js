@@ -1,5 +1,9 @@
 'use strict'
 
+function isUndefined (value) {
+  return value === undefined
+}
+
 function isObject (value) {
   return value === Object(value)
 }
@@ -21,14 +25,9 @@ function isFile (value) {
       && typeof value.name === 'string'
 }
 
-function isUndefined (value) {
-  return value === undefined
-}
-
 function isDate (value) {
   return value instanceof Date
 }
-
 
 function objectToFormData (obj, fd, pre) {
   fd = fd || new FormData()
