@@ -1,7 +1,7 @@
 # object-to-formdata
-  A convenient JavaScript function that converts an object to a FormData instance.
+A convenient JavaScript function that converts an object to a FormData instance
 
-```
+```js
 const objectToFormData = require('object-to-formdata')
 
 const object = {
