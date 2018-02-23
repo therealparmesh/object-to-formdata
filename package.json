@@ -22,10 +22,10 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "formdata-polyfill": "^3.0.9",
-    "jsdom": "^11.6.1",
-    "nyc": "^11.4.1",
-    "sinon": "^4.2.2",
-    "standard": "^10.0.3"
+    "jsdom": "^11.6.2",
+    "nyc": "^11.5.0",
+    "sinon": "^5.0.0",
+    "standard": "^11.0.0"
   },
   "standard": {
     "globals": [
