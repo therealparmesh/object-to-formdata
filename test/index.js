@@ -315,3 +315,26 @@ test('Array where key ends with "[]"', t => {
     'baz'
   ])
 })
+
+test('Array with indices option set', t => {
+  const formData = objectToFormData({
+    foo: [
+      'bar',
+      'baz'
+    ]
+  }, {
+    indices: true
+  })
+
+  t.true(formData.append.calledTwice)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo[0]',
+    'bar'
+  ])
+  t.deepEqual(formData.append.getCall(1).args, [
+    'foo[1]',
+    'baz'
+  ])
+  t.deepEqual(formData.get('foo[0]'), 'bar')
+  t.deepEqual(formData.get('foo[1]'), 'baz')
+})
