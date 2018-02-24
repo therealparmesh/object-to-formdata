@@ -11,7 +11,11 @@ const object = {
    */
 }
 
-const formData = objectToFormData(object)
+const options = {
+  indices: false
+}
+
+const formData = objectToFormData(object, options)
 
 console.log(formData)
 ```
