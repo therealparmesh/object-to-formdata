@@ -12,14 +12,22 @@ function isArray (value) {
   return Array.isArray(value)
 }
 
-function isBlob (value) {
+const isBlob = typeof Blob === 'undefined' ?
+function (value) {
+  return value instanceof Blob
+} :
+function (value) {
   return value != null &&
       typeof value.size === 'number' &&
       typeof value.type === 'string' &&
       typeof value.slice === 'function'
 }
 
-function isFile (value) {
+const isFile = typeof File === 'undefined' ?
+function (value) {
+  return value instanceof File
+} :
+function (value) {
   return isBlob(value) &&
       typeof value.lastModified === 'number' &&
       typeof value.name === 'string'
