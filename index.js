@@ -13,16 +13,16 @@ function isArray (value) {
 }
 
 function isBlob (value) {
-  return value != null
-      && typeof value.size === 'number'
-      && typeof value.type === 'string'
-      && typeof value.slice === 'function'
+  return value != null &&
+      typeof value.size === 'number' &&
+      typeof value.type === 'string' &&
+      typeof value.slice === 'function'
 }
 
 function isFile (value) {
-  return isBlob(value)
-      && typeof value.lastModified === 'number'
-      && typeof value.name === 'string'
+  return isBlob(value) &&
+      typeof value.lastModified === 'number' &&
+      typeof value.name === 'string'
 }
 
 function isDate (value) {
