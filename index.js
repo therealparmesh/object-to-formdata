@@ -22,7 +22,7 @@ function isReactNativeBlob (value) {
   return value && typeof value.uri !== 'undefined'
 }
 
-const isBlob = typeof Blob === 'undefined' ?
+const isBlob = typeof Blob !== 'undefined' ?
 function (value, isReactNative) {
   return value instanceof Blob
     || isReactNative && isReactNativeBlob(value)
@@ -35,7 +35,7 @@ function (value, isReactNative) {
     || isReactNative && isReactNativeBlob(value)
 }
 
-const isFile = typeof File === 'undefined' ?
+const isFile = typeof File !== 'undefined' ?
 function (value, isReactNative) {
   return value instanceof File
     || isReactNative && isReactNativeBlob(value)
