@@ -1,12 +1,12 @@
 import test from 'ava'
 import sinon from 'sinon'
 import jsdom from 'jsdom'
-import objectToFormData from '..'
 
 global.window = (new jsdom.JSDOM()).window
 
 require('formdata-polyfill')
 
+global.File = global.window.File
 global.FormData = class FormData {
   constructor () {
     this.$ = new global.window.FormData()
@@ -15,7 +15,9 @@ global.FormData = class FormData {
     this.append = sinon.spy(this.$.append.bind(this.$))
   }
 }
-global.File = global.window.File
+
+const objectToFormData = require('..')
+
 
 test('undefined', t => {
   const formData = objectToFormData({
