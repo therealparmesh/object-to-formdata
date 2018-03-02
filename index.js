@@ -35,18 +35,6 @@ function (value, isReactNative) {
     || isReactNative && isReactNativeBlob(value)
 }
 
-const isFile = typeof File !== 'undefined' ?
-function (value, isReactNative) {
-  return value instanceof File
-    || isReactNative && isReactNativeBlob(value)
-} :
-function (value, isReactNative) {
-  return isBlob(value) &&
-      typeof value.lastModified === 'number' &&
-      typeof value.name === 'string'
-    || isReactNative && isReactNativeBlob(value)
-}
-
 function isDate (value) {
   return value instanceof Date
 }
