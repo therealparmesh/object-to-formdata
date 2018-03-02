@@ -6,6 +6,7 @@ global.window = (new jsdom.JSDOM()).window
 
 require('formdata-polyfill')
 
+global.Blob = global.window.Blob
 global.File = global.window.File
 global.FormData = class FormData {
   constructor () {
@@ -109,6 +110,20 @@ test('empty string', t => {
     ''
   ])
   t.is(formData.get('foo'), '')
+})
+
+test('Blob', t => {
+  const foo = new Blob([])
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo
+  ])
+  t.deepEqual(formData.get('foo'), new File([foo], ''))
 })
 
 test('File', t => {

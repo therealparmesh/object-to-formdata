@@ -65,7 +65,7 @@ function objectToFormData (obj, fd, pre) {
 
       objectToFormData(value, fd, key)
     })
-  } else if (isObject(obj) && !isFile(obj, isReactNative) && !isDate(obj)) {
+  } else if (isObject(obj) && !isBlob(obj, isReactNative) && !isDate(obj)) {
     Object.keys(obj).forEach(function (prop) {
       var value = obj[prop]
 
