@@ -126,6 +126,33 @@ test('Blob', t => {
   t.deepEqual(formData.get('foo'), new File([foo], ''))
 })
 
+test('ReactNative "blob"', t => {
+  const FormDataOrig = global.FormData
+  global.FormData = class FormData {
+    constructor () {
+      this.$ = new global.window.FormData()
+      this.get = this.$.get.bind(this.$)
+      this.getAll = this.$.getAll.bind(this.$)
+      this.getParts = function(){}
+      this.append = sinon.spy(this.$.append.bind(this.$))
+    }
+  }
+
+  const foo = {uri: 'content://...'}
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo
+  ])
+  t.deepEqual(formData.get('foo'), '[object Object]')
+
+  global.FormData = FormDataOrig
+})
+
 test('File', t => {
   const foo = new File([], {})
   const formData = objectToFormData({
