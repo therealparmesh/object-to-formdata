@@ -29,16 +29,18 @@ function isFile (value) {
     typeof value.name === 'string'
 }
 
-function objectToFormData (obj, fd, pre) {
+function objectToFormData (obj, cfg, fd, pre) {
+  cfg = cfg || {}
+  cfg.indices = cfg.indices || false
   fd = fd || new FormData()
 
   if (isUndefined(obj)) {
     return fd
   } else if (isArray(obj)) {
-    obj.forEach(function (value) {
-      var key = pre + '[]'
+    obj.forEach(function (value, index) {
+      var key = pre + '[' + (cfg.indices ? index : '') + ']'
 
-      objectToFormData(value, fd, key)
+      objectToFormData(value, cfg, fd, key)
     })
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString())
@@ -54,7 +56,7 @@ function objectToFormData (obj, fd, pre) {
 
       var key = pre ? (pre + '[' + prop + ']') : prop
 
-      objectToFormData(value, fd, key)
+      objectToFormData(value, cfg, fd, key)
     })
   } else {
     fd.append(pre, obj)
