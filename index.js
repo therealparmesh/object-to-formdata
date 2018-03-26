@@ -42,7 +42,7 @@ function objectToFormData (obj, fd, pre) {
     })
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString())
-  } else if (isObject(obj) && !isDate(obj) && !isFile(obj)) {
+  } else if (isObject(obj) && !isDate(obj) && !isFile(obj) && !isBlob(obj)) {
     Object.keys(obj).forEach(function (prop) {
       var value = obj[prop]
 

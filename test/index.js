@@ -303,7 +303,7 @@ test('Date', t => {
 })
 
 test('File', t => {
-  const foo = new File([], {})
+  const foo = new File([], '')
   const formData = objectToFormData({
     foo
   })
