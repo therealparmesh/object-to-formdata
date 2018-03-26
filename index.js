@@ -12,6 +12,10 @@ function isArray (value) {
   return Array.isArray(value)
 }
 
+function isDate (value) {
+  return value instanceof Date
+}
+
 function isBlob (value) {
   return value &&
     typeof value.size === 'number' &&
@@ -25,10 +29,6 @@ function isFile (value) {
     typeof value.name === 'string'
 }
 
-function isDate (value) {
-  return value instanceof Date
-}
-
 function objectToFormData (obj, fd, pre) {
   fd = fd || new FormData()
 
@@ -40,7 +40,9 @@ function objectToFormData (obj, fd, pre) {
 
       objectToFormData(value, fd, key)
     })
-  } else if (isObject(obj) && !isFile(obj) && !isDate(obj)) {
+  } else if (isDate(obj)) {
+    fd.append(pre, obj.toISOString())
+  } else if (isObject(obj) && !isDate(obj) && !isFile(obj)) {
     Object.keys(obj).forEach(function (prop) {
       var value = obj[prop]
 

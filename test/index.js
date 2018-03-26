@@ -109,34 +109,6 @@ test('empty string', t => {
   t.is(formData.get('foo'), '')
 })
 
-test('File', t => {
-  const foo = new File([], {})
-  const formData = objectToFormData({
-    foo
-  })
-
-  t.true(formData.append.calledOnce)
-  t.deepEqual(formData.append.getCall(0).args, [
-    'foo',
-    foo
-  ])
-  t.is(formData.get('foo'), foo)
-})
-
-test('Date', t => {
-  const foo = new Date()
-  const formData = objectToFormData({
-    foo
-  })
-
-  t.true(formData.append.calledOnce)
-  t.deepEqual(formData.append.getCall(0).args, [
-    'foo',
-    foo
-  ])
-  t.is(formData.get('foo'), foo.toString())
-})
-
 test('Object', t => {
   const formData = objectToFormData({
     foo: {
@@ -314,4 +286,32 @@ test('Array where key ends with "[]"', t => {
     'bar',
     'baz'
   ])
+})
+
+test('Date', t => {
+  const foo = new Date(2000, 0, 1, 1, 1, 1)
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo.toISOString()
+  ])
+  t.is(formData.get('foo'), foo.toISOString())
+})
+
+test('File', t => {
+  const foo = new File([], {})
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo
+  ])
+  t.is(formData.get('foo'), foo)
 })
