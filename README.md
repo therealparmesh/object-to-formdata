@@ -19,7 +19,12 @@ const options = {
   indices: false
 }
 
-const formData = objectToFormData(object, options)
+const formData = objectToFormData(
+  object,
+  options, // optional
+  existingFormData, // optional
+  keyPrefix // optional
+)
 
 console.log(formData)
 ```
