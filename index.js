@@ -29,7 +29,17 @@ function isFile (value) {
     typeof value.name === 'string'
 }
 
+function isFormData (value) {
+  return value instanceof FormData
+}
+
 function objectToFormData (obj, cfg, fd, pre) {
+  if (isFormData(cfg)) {
+    pre = fd
+    fd = cfg
+    cfg = null
+  }
+
   cfg = cfg || {}
   cfg.indices = cfg.indices || false
   fd = fd || new FormData()

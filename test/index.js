@@ -338,3 +338,19 @@ test('File', t => {
   ])
   t.is(formData.get('foo'), foo)
 })
+
+test('FormData instance as second parameter', t => {
+  const foo = 'foo'
+  const data = new FormData()
+  const formData = objectToFormData({
+    foo
+  }, data)
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo
+  ])
+  t.is(formData.get('foo'), foo)
+  t.is(data, formData)
+})
