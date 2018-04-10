@@ -176,9 +176,9 @@ test('Date', t => {
   t.true(formData.append.calledOnce)
   t.deepEqual(formData.append.getCall(0).args, [
     'foo',
-    foo
+    foo.toISOString()
   ])
-  t.is(formData.get('foo'), foo.toString())
+  t.is(formData.get('foo'), foo.toISOString())
 })
 
 test('Object', t => {
