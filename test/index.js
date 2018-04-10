@@ -359,3 +359,69 @@ test('Array where key ends with "[]"', t => {
     'baz'
   ])
 })
+
+test('Array with indices option', t => {
+  const formData = objectToFormData({
+    foo: [
+      'bar',
+      'baz'
+    ]
+  }, {
+    indices: true
+  })
+
+  t.true(formData.append.calledTwice)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo[0]',
+    'bar'
+  ])
+  t.deepEqual(formData.append.getCall(1).args, [
+    'foo[1]',
+    'baz'
+  ])
+  t.deepEqual(formData.get('foo[0]'), 'bar')
+  t.deepEqual(formData.get('foo[1]'), 'baz')
+})
+
+test('Date', t => {
+  const foo = new Date(2000, 0, 1, 1, 1, 1)
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo.toISOString()
+  ])
+  t.is(formData.get('foo'), foo.toISOString())
+})
+
+test('File', t => {
+  const foo = new File([], '')
+  const formData = objectToFormData({
+    foo
+  })
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    foo
+  ])
+  t.is(formData.get('foo'), foo)
+})
+
+test('FormData instance as second parameter', t => {
+  const existingFormData = new FormData()
+  const formData = objectToFormData({
+    foo: 'bar'
+  }, existingFormData)
+
+  t.true(formData.append.calledOnce)
+  t.deepEqual(formData.append.getCall(0).args, [
+    'foo',
+    'bar'
+  ])
+  t.is(formData.get('foo'), 'bar')
+  t.is(formData, existingFormData)
+})

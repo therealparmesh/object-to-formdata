@@ -39,7 +39,19 @@ function isDate (value) {
   return value instanceof Date
 }
 
-function objectToFormData (obj, fd, pre) {
+function isFormData (value) {
+  return value instanceof FormData
+}
+
+function objectToFormData (obj, cfg, fd, pre) {
+  if (isFormData(cfg)) {
+    pre = fd
+    fd = cfg
+    cfg = null
+  }
+
+  cfg = cfg || {}
+  cfg.indices = cfg.indices || false
   fd = fd || new FormData()
 
   // ReactNative `FormData` has a non-standard `getParts()` method
@@ -48,12 +60,14 @@ function objectToFormData (obj, fd, pre) {
   if (isUndefined(obj)) {
     return fd
   } else if (isArray(obj)) {
-    obj.forEach(function (value) {
-      var key = pre + '[]'
+    obj.forEach(function (value, index) {
+      var key = pre + '[' + (cfg.indices ? index : '') + ']'
 
-      objectToFormData(value, fd, key)
+      objectToFormData(value, cfg, fd, key)
     })
-  } else if (isObject(obj) && !isBlob(obj, isReactNative) && !isDate(obj)) {
+  } else if (isDate(obj)) {
+    fd.append(pre, obj.toISOString())
+  } else if (isObject(obj) && !isBlob(obj, isReactNative)) {
     Object.keys(obj).forEach(function (prop) {
       var value = obj[prop]
 
@@ -65,7 +79,7 @@ function objectToFormData (obj, fd, pre) {
 
       var key = pre ? (pre + '[' + prop + ']') : prop
 
-      objectToFormData(value, fd, key)
+      objectToFormData(value, cfg, fd, key)
     })
   } else {
     fd.append(pre, obj)

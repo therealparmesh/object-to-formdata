@@ -11,7 +11,20 @@ const object = {
    */
 }
 
-const formData = objectToFormData(object)
+const options = {
+  /**
+   * whether or not to include array indices in FormData keys
+   * defaults to false
+   */
+  indices: false
+}
+
+const formData = objectToFormData(
+  object,
+  options, // optional
+  existingFormData, // optional
+  keyPrefix // optional
+)
 
 console.log(formData)
 ```
