@@ -53,11 +53,15 @@ function objectToFormData (obj, cfg, fd, pre) {
   } else if (isNull(obj)) {
     fd.append(pre, '')
   } else if (isArray(obj)) {
-    obj.forEach(function (value, index) {
-      var key = pre + '[' + (cfg.indices ? index : '') + ']'
+    if (obj.length === 0) {
+      fd.append(pre + "[]", obj);
+    } else {
+      obj.forEach(function(value, index) {
+        var key = pre + "[" + (cfg.indices ? index : "") + "]";
 
-      objectToFormData(value, cfg, fd, key)
-    })
+        objectToFormData(value, cfg, fd, key);
+      });
+    }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString())
   } else if (isObject(obj) && !isFile(obj) && !isBlob(obj)) {
