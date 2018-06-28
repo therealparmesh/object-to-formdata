@@ -145,7 +145,9 @@ test('empty Array', () => {
     foo: []
   })
 
-  expect(formData.append).not.toHaveBeenCalled()
+  expect(formData.append).toHaveBeenCalledTimes(1)
+  expect(formData.append).toHaveBeenCalledWith('foo[]', '')
+  expect(formData.get('foo[]')).toBe('')
 })
 
 test('Array in Array', () => {
