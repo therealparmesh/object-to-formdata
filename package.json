@@ -4,9 +4,9 @@
   "description": "A convenient JavaScript function that converts an object to a FormData instance",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava",
-    "test:watch": "ava --watch",
-    "lint": "standard --fix"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "repository": "therealparmesh/object-to-formdata",
   "keywords": [
@@ -15,22 +15,12 @@
     "object",
     "formdata",
     "form",
-    "submit"
+    "submit",
+    "vanilla"
   ],
   "author": "Parmesh Krishen",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.25.0",
-    "formdata-polyfill": "^3.0.9",
-    "jsdom": "^11.6.2",
-    "nyc": "^11.5.0",
-    "sinon": "^5.0.0",
-    "standard": "^11.0.0"
-  },
-  "standard": {
-    "globals": [
-      "FormData",
-      "File"
-    ]
+    "jest": "^23.2.0"
   }
 }

@@ -4,6 +4,10 @@ function isUndefined (value) {
   return value === undefined
 }
 
+function isNull (value) {
+  return value === null
+}
+
 function isObject (value) {
   return value === Object(value)
 }
@@ -46,6 +50,8 @@ function objectToFormData (obj, cfg, fd, pre) {
 
   if (isUndefined(obj)) {
     return fd
+  } else if (isNull(obj)) {
+    fd.append(pre, '')
   } else if (isArray(obj)) {
     obj.forEach(function (value, index) {
       var key = pre + '[' + (cfg.indices ? index : '') + ']'
