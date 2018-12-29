@@ -50,7 +50,7 @@ function objectToFormData(obj, cfg, fd, pre) {
   }
 
   cfg = cfg || {};
-  cfg.indices = cfg.indices || false;
+  cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices;
   cfg.nulls = isUndefined(cfg.nulls) ? true : cfg.nulls;
   fd = fd || new FormData();
 
