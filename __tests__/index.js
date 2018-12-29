@@ -24,13 +24,13 @@ test('null', () => {
   expect(formData.get('foo')).toBe('');
 });
 
-test('null with noNulls option', () => {
+test('null with nulls option', () => {
   const formData = objectToFormData(
     {
       foo: null
     },
     {
-      noNulls: true
+      nulls: false
     }
   );
 

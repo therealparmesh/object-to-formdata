@@ -51,13 +51,13 @@ function objectToFormData(obj, cfg, fd, pre) {
 
   cfg = cfg || {};
   cfg.indices = cfg.indices || false;
-  cfg.noNulls = cfg.noNulls || false;
+  cfg.nulls = isUndefined(cfg.nulls) ? true : cfg.nulls;
   fd = fd || new FormData();
 
   if (isUndefined(obj)) {
     return fd;
   } else if (isNull(obj)) {
-    if (!cfg.noNulls) {
+    if (cfg.nulls) {
       fd.append(pre, '');
     }
   } else if (isArray(obj)) {

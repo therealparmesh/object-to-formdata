@@ -24,9 +24,9 @@ const options = {
 
   /**
    * whether or not to include null values as empty strings in FormData instance
-   * defaults to false
+   * defaults to true
    */
-  noNulls: false
+  nulls: true
 };
 
 const formData = objectToFormData(
