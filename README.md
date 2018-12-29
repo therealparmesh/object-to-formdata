@@ -6,29 +6,35 @@
 `object-to-formdata` is a convenient JavaScript function that converts an object to a FormData instance.
 
 ```js
-const objectToFormData = require('object-to-formdata')
+const objectToFormData = require('object-to-formdata');
 
 const object = {
   /**
    * key-value mapping
    * values can be primitives or objects
    */
-}
+};
 
 const options = {
   /**
    * whether or not to include array indices in FormData keys
    * defaults to false
    */
-  indices: false
-}
+  indices: false,
+
+  /**
+   * whether or not to include null values as empty strings in FormData instance
+   * defaults to false
+   */
+  noNulls: false
+};
 
 const formData = objectToFormData(
   object,
   options, // optional
   existingFormData, // optional
   keyPrefix // optional
-)
+);
 
-console.log(formData)
+console.log(formData);
 ```
