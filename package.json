@@ -7,7 +7,7 @@
     "lint": "standard --fix **/*.js",
     "test": "jest --coverage"
   },
-  "types": "./index.d.ts",
+  "types": "index.d.ts",
   "repository": "therealparmesh/object-to-formdata",
   "keywords": [
     "object-to-formdata",
