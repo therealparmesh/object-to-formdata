@@ -12,3 +12,4 @@ interface ICfg {
     nulls?: boolean;
 }
 declare function objectToFormData(obj: any, cfg?: ICfg | FormData | ParamType, fd?: FormData, pre?: FormData | string): FormData;
+declare module 'object-to-formdata';

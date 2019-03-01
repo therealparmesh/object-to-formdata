@@ -1,6 +1,6 @@
 {
   "name": "object-to-formdata",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "A convenient JavaScript function that converts an object to a FormData instance",
   "main": "index.js",
   "scripts": {
