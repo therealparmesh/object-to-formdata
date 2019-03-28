@@ -1,6 +1,6 @@
 {
-  "name": "object-to-formdata",
-  "version": "1.4.3",
+  "name": "@foqum/object-to-formdata",
+  "version": "0.0.1",
   "description": "A convenient JavaScript function that converts an object to a FormData instance",
   "main": "index.js",
   "scripts": {
