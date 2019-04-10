@@ -38,3 +38,71 @@ const formData = objectToFormData(
 
 console.log(formData);
 ```
+
+Practical ES6 Vue Axios example for PHP (and others). If you would like to receive data 
+in proper associate array format set option incides to true.
+```vue
+<template>
+
+    <div>
+        {{uploading ? 'UPLOADING' : ''}}
+        <button @click="sendMessage">Send message</button>
+    </div>
+
+</template>
+
+<script>
+
+    import axios from 'axios';
+    import objectToFormData from 'object-to-formdata';
+
+    export default {
+
+        methods: {
+            data() {
+                return {
+                    uploading: false
+                }
+            },
+            sendMessage() {
+                import objectToFormData from 'object-to-formdata';
+
+                const message = {
+                    message: 'It is sunny today!',
+                    comments: [
+                        {
+                            id: 1,
+                            comment: 'Not here in Seattle!'
+                        },
+                        {
+                            id: 2,
+                            comment: 'It is always sunny if florida'
+                        }
+                    ]
+                };
+
+                const options = {
+                    indices: true
+                };
+
+                let formData = objectToFormData(message, options);
+
+                this.uploading = true;
+
+                axios.put('/messages', formData)
+                    .then((response) => {
+                        // Handle success
+                    })
+                    .catch((error) => {
+                        // Handle errors
+                    })
+                    .finally(() => {
+                        this.uploading = false;
+                    });
+            }
+        }
+    }
+
+</script>
+
+```
