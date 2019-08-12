@@ -66,8 +66,9 @@ function objectToFormData(obj, cfg, fd, pre) {
 
       fd.append(key, '');
     } else {
+    var idx = 0;
       obj.forEach(function(value, index) {
-        var key = pre + '[' + (cfg.indices ? index : '') + ']';
+        var key = pre + '[' + (cfg.indices ? index : idx) + ']';
 
         objectToFormData(value, cfg, fd, key);
       });
