@@ -22,7 +22,7 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "24.9.0",
-    "standard": "13.1.0"
+    "standard": "14.0.0"
   },
   "standard": {
     "env": [
