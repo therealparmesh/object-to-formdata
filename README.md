@@ -6,7 +6,7 @@
 `object-to-formdata` is a convenient JavaScript function that converts an object to a FormData instance.
 
 ```js
-const objectToFormData = require('object-to-formdata');
+import objectToFormData from 'object-to-formdata';
 
 const object = {
   /**
@@ -17,16 +17,16 @@ const object = {
 
 const options = {
   /**
-   * whether or not to include array indices in FormData keys
+   * include array indices in FormData keys
    * defaults to false
    */
   indices: false,
 
   /**
-   * whether or not to include null values as empty strings in FormData instance
-   * defaults to true
+   * treat null values like undefined values and ignore them
+   * defaults to false
    */
-  nulls: true
+  nullsAsUndefineds: false,
 };
 
 const formData = objectToFormData(

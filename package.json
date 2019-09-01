@@ -1,32 +1,53 @@
 {
   "name": "object-to-formdata",
   "version": "1.6.4",
-  "description": "A convenient JavaScript function that converts an object to a FormData instance",
-  "main": "index.js",
-  "scripts": {
-    "lint": "standard --fix **/*.js",
-    "test": "jest --coverage"
-  },
-  "types": "index.d.ts",
   "repository": "therealparmesh/object-to-formdata",
+  "license": "MIT",
   "keywords": [
     "object-to-formdata",
     "javascript",
     "object",
     "formdata",
     "form",
-    "submit",
-    "vanilla"
+    "submit"
   ],
-  "author": "Parmesh Krishen",
-  "license": "MIT",
+  "main": "dist",
+  "types": "index.d.ts",
+  "scripts": {
+    "lint": "standard '**/*.js'",
+    "test": "jest --coverage",
+    "build": "rollup --config",
+    "prepublishOnly": "run-s lint test build"
+  },
   "devDependencies": {
+    "@babel/core": "7.5.5",
+    "@babel/preset-env": "7.5.5",
     "jest": "24.9.0",
+    "npm-run-all": "4.1.5",
+    "rollup": "1.20.3",
+    "rollup-plugin-babel": "4.3.3",
+    "rollup-plugin-terser": "5.1.1",
     "standard": "14.1.0"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "browserslist": [
+    "last 2 chrome versions",
+    "last 2 safari versions",
+    "last 2 edge versions",
+    "last 2 firefox versions",
+    "last 2 ios versions",
+    "last 2 chromeandroid versions",
+    "ie 11",
+    "maintained node versions"
+  ],
   "standard": {
     "env": [
       "browser",
+      "node",
       "jest"
     ]
   }
