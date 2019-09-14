@@ -27,7 +27,7 @@
     "rollup": "1.21.3",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-terser": "5.1.2",
-    "standard": "14.2.0"
+    "standard": "14.3.0"
   },
   "babel": {
     "presets": [
