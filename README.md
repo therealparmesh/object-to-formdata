@@ -27,6 +27,13 @@ const options = {
    * defaults to false
    */
   nullsAsUndefineds: false,
+
+  /**
+   * treat boolean values like string intergers
+   * true => '1', false => '0'
+   * defaults to false
+   */
+  boolToInt: false,
 };
 
 const formData = objectToFormData(

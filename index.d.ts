@@ -5,6 +5,7 @@ declare function objectToFormData(
   cfg?: {
     indices?: boolean;
     nullsAsUndefineds?: boolean;
+    boolToInt?: boolean;
   },
   fd?: FormData,
   pre?: string

@@ -8,6 +8,8 @@ const isArray = value => Array.isArray(value)
 
 const isDate = value => value instanceof Date
 
+const isBoolean = value => typeof value === 'boolean'
+
 const isBlob = value =>
   value &&
   typeof value.size === 'number' &&
@@ -24,6 +26,7 @@ const objectToFormData = (obj, cfg, fd, pre) => {
   cfg = cfg || {}
   cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices
   cfg.nullsAsUndefineds = isUndefined(cfg.nullsAsUndefineds) ? false : cfg.nullsAsUndefineds
+  cfg.boolToInt = isUndefined(cfg.boolToInt) ? false : cfg.boolToInt
   fd = fd || new FormData()
 
   if (isUndefined(obj)) {
@@ -60,6 +63,12 @@ const objectToFormData = (obj, cfg, fd, pre) => {
 
       objectToFormData(value, cfg, fd, key)
     })
+  } else if (isBoolean(obj)) {
+    if (cfg.boolToInt) {
+      fd.append(pre, obj ? '1' : '0')
+    } else {
+      fd.append(pre, obj)
+    }
   } else {
     fd.append(pre, obj)
   }

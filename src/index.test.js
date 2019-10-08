@@ -52,6 +52,19 @@ test('boolean', () => {
   expect(formData.get('bar')).toBe('false')
 })
 
+test('boolean with boolToInt', () => {
+  const formData = objectToFormData({
+    foo: true,
+    bar: false
+  }, { boolToInt: true })
+
+  expect(formData.append).toHaveBeenCalledTimes(2)
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', '1')
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'bar', '0')
+  expect(formData.get('foo')).toBe('1')
+  expect(formData.get('bar')).toBe('0')
+})
+
 test('number', () => {
   const formData = objectToFormData({
     foo: 1
