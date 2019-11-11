@@ -8,6 +8,7 @@ const isArray = value => Array.isArray(value)
 
 const isDate = value => value instanceof Date
 
+const isBoolean = val => Boolean(val) === val || val == 'true' || val == 'false'
 const isBlob = value =>
   value &&
   typeof value.size === 'number' &&
@@ -46,6 +47,8 @@ const objectToFormData = (obj, cfg, fd, pre) => {
     }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString())
+  } else if (isBoolean(obj)) {
+    fd.append(pre, (obj === 'true' || obj === true) ? 1 : 0)
   } else if (isObject(obj) && !isFile(obj) && !isBlob(obj)) {
     Object.keys(obj).forEach(prop => {
       const value = obj[prop]
