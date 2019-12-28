@@ -1,4 +1,6 @@
-export declare function objectToFormData(
+export = objectToFormData;
+
+declare function objectToFormData(
   obj: any,
   cfg?: {
     indices?: boolean;
