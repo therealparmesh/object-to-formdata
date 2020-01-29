@@ -16,6 +16,11 @@
   "module": "dist/index.mjs",
   "source": "src/index.js",
   "types": "types.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "types.d.ts"
+  ],
   "scripts": {
     "build": "microbundle --format cjs,es",
     "prepublishOnly": "npm run-script build",
