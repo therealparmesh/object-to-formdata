@@ -52,7 +52,25 @@ test('boolean', () => {
   expect(formData.get('bar')).toBe('false')
 })
 
-test('number', () => {
+test('boolean with booleansAsIntegers option', () => {
+  const formData = objectToFormData(
+    {
+      foo: true,
+      bar: false
+    },
+    {
+      booleansAsIntegers: true
+    }
+  )
+
+  expect(formData.append).toHaveBeenCalledTimes(2)
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', 1)
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'bar', 0)
+  expect(formData.get('foo')).toBe('1')
+  expect(formData.get('bar')).toBe('0')
+})
+
+test('integer', () => {
   const formData = objectToFormData({
     foo: 1
   })
@@ -60,6 +78,16 @@ test('number', () => {
   expect(formData.append).toHaveBeenCalledTimes(1)
   expect(formData.append).toHaveBeenCalledWith('foo', 1)
   expect(formData.get('foo')).toBe('1')
+})
+
+test('float', () => {
+  const formData = objectToFormData({
+    foo: 1.0100
+  })
+
+  expect(formData.append).toHaveBeenCalledTimes(1)
+  expect(formData.append).toHaveBeenCalledWith('foo', 1.01)
+  expect(formData.get('foo')).toBe('1.01')
 })
 
 test('string', () => {
