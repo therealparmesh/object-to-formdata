@@ -1,54 +1,40 @@
 {
   "name": "object-to-formdata",
-  "version": "2.3.1",
-  "repository": "therealparmesh/object-to-formdata",
-  "license": "MIT",
+  "version": "3.0.0",
   "keywords": [
-    "object-to-formdata",
+    "form",
+    "formdata",
     "javascript",
     "object",
-    "formdata",
-    "form",
+    "object-to-formdata",
     "submit"
   ],
-  "main": "dist",
-  "types": "index.d.ts",
+  "repository": "github:therealparmesh/object-to-formdata",
+  "license": "MIT",
+  "author": "Parmesh Krishen",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "source": "src/index.js",
+  "types": "types.d.ts",
   "scripts": {
-    "lint": "standard '**/*.js'",
-    "test": "jest --coverage",
-    "build": "rollup --config",
-    "prepublishOnly": "run-s lint test build"
+    "build": "microbundle --format cjs,es",
+    "prepublishOnly": "npm run-script build",
+    "test": "npm run-script build && jest --coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run-script test"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
   },
   "devDependencies": {
-    "@babel/core": "7.8.3",
-    "@babel/preset-env": "7.8.3",
-    "jest": "24.9.0",
-    "npm-run-all": "4.1.5",
-    "rollup": "1.28.0",
-    "rollup-plugin-babel": "4.3.3",
-    "rollup-plugin-terser": "5.1.3",
-    "standard": "14.3.1"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
-  },
-  "browserslist": [
-    "last 2 chrome versions",
-    "last 2 safari versions",
-    "last 2 edge versions",
-    "last 2 firefox versions",
-    "last 2 ios versions",
-    "last 2 chromeandroid versions",
-    "ie 11",
-    "maintained node versions"
-  ],
-  "standard": {
-    "env": [
-      "browser",
-      "node",
-      "jest"
-    ]
+    "husky": "^4.0.10",
+    "jest": "^25.1.0",
+    "microbundle": "^0.11.0",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1"
   }
 }

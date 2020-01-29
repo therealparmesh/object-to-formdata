@@ -1,79 +1,85 @@
-const isUndefined = value => value === undefined
+const isUndefined = value => value === undefined;
 
-const isNull = value => value === null
+const isNull = value => value === null;
 
-const isObject = value => value === Object(value)
+const isBoolean = value => typeof value === 'boolean';
 
-const isArray = value => Array.isArray(value)
+const isObject = value => value === Object(value);
 
-const isDate = value => value instanceof Date
+const isArray = value => Array.isArray(value);
 
-const isBoolean = value => typeof value === 'boolean'
+const isDate = value => value instanceof Date;
 
 const isBlob = value =>
   value &&
   typeof value.size === 'number' &&
   typeof value.type === 'string' &&
-  typeof value.slice === 'function'
+  typeof value.slice === 'function';
 
 const isFile = value =>
   isBlob(value) &&
   typeof value.name === 'string' &&
   (typeof value.lastModifiedDate === 'object' ||
-    typeof value.lastModified === 'number')
+    typeof value.lastModified === 'number');
 
-const objectToFormData = (obj, cfg, fd, pre) => {
-  cfg = cfg || {}
-  cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices
-  cfg.booleansAsIntegers = isUndefined(cfg.booleansAsIntegers) ? false : cfg.booleansAsIntegers
-  cfg.nullsAsUndefineds = isUndefined(cfg.nullsAsUndefineds) ? false : cfg.nullsAsUndefineds
-  fd = fd || new FormData()
+export const objectToFormData = (obj, cfg, fd, pre) => {
+  cfg = cfg || {};
+
+  cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices;
+
+  cfg.nullsAsUndefineds = isUndefined(cfg.nullsAsUndefineds)
+    ? false
+    : cfg.nullsAsUndefineds;
+
+  cfg.booleansAsIntegers = isUndefined(cfg.booleansAsIntegers)
+    ? false
+    : cfg.booleansAsIntegers;
+
+  fd = fd || new FormData();
 
   if (isUndefined(obj)) {
-    return fd
+    return fd;
   } else if (isNull(obj)) {
     if (!cfg.nullsAsUndefineds) {
-      fd.append(pre, '')
+      fd.append(pre, '');
+    }
+  } else if (isBoolean(obj)) {
+    if (cfg.booleansAsIntegers) {
+      fd.append(pre, obj ? 1 : 0);
+    } else {
+      fd.append(pre, obj);
     }
   } else if (isArray(obj)) {
     if (!obj.length) {
-      const key = pre + '[]'
+      const key = pre + '[]';
 
-      fd.append(key, '')
+      fd.append(key, '');
     } else {
       obj.forEach((value, index) => {
-        const key = pre + '[' + (cfg.indices ? index : '') + ']'
+        const key = pre + '[' + (cfg.indices ? index : '') + ']';
 
-        objectToFormData(value, cfg, fd, key)
-      })
+        objectToFormData(value, cfg, fd, key);
+      });
     }
   } else if (isDate(obj)) {
-    fd.append(pre, obj.toISOString())
-  } else if (isBoolean(obj)) {
-    if (cfg.booleansAsIntegers) {
-      fd.append(pre, obj ? 1 : 0)
-    } else {
-      fd.append(pre, obj)
-    }
+    fd.append(pre, obj.toISOString());
   } else if (isObject(obj) && !isFile(obj) && !isBlob(obj)) {
     Object.keys(obj).forEach(prop => {
-      const value = obj[prop]
+      const value = obj[prop];
 
       if (isArray(value)) {
         while (prop.length > 2 && prop.lastIndexOf('[]') === prop.length - 2) {
-          prop = prop.substring(0, prop.length - 2)
+          prop = prop.substring(0, prop.length - 2);
         }
       }
 
-      const key = pre ? pre + '[' + prop + ']' : prop
+      const key = pre ? pre + '[' + prop + ']' : prop;
 
-      objectToFormData(value, cfg, fd, key)
-    })
+      objectToFormData(value, cfg, fd, key);
+    });
   } else {
-    fd.append(pre, obj)
+    fd.append(pre, obj);
   }
 
-  return fd
-}
-
-export default objectToFormData
+  return fd;
+};

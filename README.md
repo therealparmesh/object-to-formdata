@@ -1,12 +1,22 @@
 # object-to-formdata
 
+> Convenient JavaScript function that converts Objects to FormData instances.
+
 [![npm](https://img.shields.io/npm/v/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
 [![npm](https://img.shields.io/npm/dt/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
 
-`object-to-formdata` is a convenient JavaScript function that converts an object to a FormData instance.
+## Install
+
+```sh
+npm install object-to-formdata
+```
+
+## Usage
+
+**NOTE: STARTING WITH VERSION 3.0.0, THERE IS NO DEFAULT EXPORT!**
 
 ```js
-import objectToFormData from 'object-to-formdata';
+import { objectToFormData } from 'object-to-formdata';
 
 const object = {
   /**
@@ -23,16 +33,16 @@ const options = {
   indices: false,
 
   /**
-   * convert true or false to 1 or 0 respectively
-   * defaults to false
-   */
-  booleansAsIntegers: false,
-
-  /**
    * treat null values like undefined values and ignore them
    * defaults to false
    */
   nullsAsUndefineds: false,
+
+  /**
+   * convert true or false to 1 or 0 respectively
+   * defaults to false
+   */
+  booleansAsIntegers: false,
 };
 
 const formData = objectToFormData(

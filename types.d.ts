@@ -1,11 +1,10 @@
-export = objectToFormData;
-
-declare function objectToFormData(
+export const objectToFormData: (
   obj: any,
   cfg?: {
     indices?: boolean;
     nullsAsUndefineds?: boolean;
+    booleansAsIntegers?: boolean;
   },
   fd?: FormData,
-  pre?: string
-): FormData;
+  pre?: string,
+) => FormData;
