@@ -23,6 +23,12 @@ const options = {
   indices: false,
 
   /**
+   * convert true or false to 1 or 0 respectively
+   * defaults to false
+   */
+  booleansAsIntegers: false,
+
+  /**
    * treat null values like undefined values and ignore them
    * defaults to false
    */
@@ -33,7 +39,7 @@ const formData = objectToFormData(
   object,
   options, // optional
   existingFormData, // optional
-  keyPrefix // optional
+  keyPrefix, // optional
 );
 
 console.log(formData);
