@@ -13,6 +13,7 @@
   "license": "MIT",
   "author": "Parmesh Krishen",
   "main": "dist/index.js",
+  "unpkg": "dist/index.umd.js",
   "module": "dist/index.mjs",
   "source": "src/index.js",
   "types": "types.d.ts",
@@ -22,7 +23,7 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "microbundle --format cjs,es",
+    "build": "microbundle",
     "prepublishOnly": "npm run-script build",
     "test": "npm run-script build && jest --coverage"
   },
