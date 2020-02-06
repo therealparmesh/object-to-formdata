@@ -24,12 +24,12 @@
   ],
   "scripts": {
     "build": "microbundle",
-    "prepublishOnly": "npm run-script build",
-    "test": "npm run-script build && jest --coverage"
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && jest --coverage"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run-script test"
+      "pre-commit": "pretty-quick --staged && npm run test"
     }
   },
   "prettier": {
