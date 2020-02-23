@@ -185,9 +185,8 @@ test('empty Array', () => {
     foo: [],
   });
 
-  expect(formData.append).toHaveBeenCalledTimes(1);
-  expect(formData.append).toHaveBeenCalledWith('foo[]', '');
-  expect(formData.get('foo[]')).toBe('');
+  expect(formData.append).not.toHaveBeenCalled();
+  expect(formData.get('foo')).toBe(null);
 });
 
 test('Array in Array', () => {

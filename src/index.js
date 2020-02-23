@@ -50,11 +50,7 @@ export const objectToFormData = (obj, cfg, fd, pre) => {
       fd.append(pre, obj);
     }
   } else if (isArray(obj)) {
-    if (!obj.length) {
-      const key = pre + '[]';
-
-      fd.append(key, '');
-    } else {
+    if (obj.length) {
       obj.forEach((value, index) => {
         const key = pre + '[' + (cfg.indices ? index : '') + ']';
 
