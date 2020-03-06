@@ -1,10 +1,12 @@
-export const objectToFormData: (
-  obj: any,
-  cfg?: {
-    indices?: boolean;
-    nullsAsUndefineds?: boolean;
-    booleansAsIntegers?: boolean;
-  },
-  fd?: FormData,
-  pre?: string,
+export type ConvertOptions = {
+  indices?: boolean;
+  nullsAsUndefineds?: boolean;
+  booleansAsIntegers?: boolean;
+};
+
+export const objectToFormData: <T>(
+  object: T,
+  options?: ConvertOptions,
+  existingFormData?: FormData,
+  keyPrefix?: string,
 ) => FormData;
