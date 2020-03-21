@@ -52,7 +52,10 @@ export const objectToFormData = (obj, cfg, fd, pre) => {
   } else if (isArray(obj)) {
     if (obj.length) {
       obj.forEach((value, index) => {
-        const key = pre + '[' + (cfg.indices ? index : '') + ']';
+        let key = pre + '[' + (cfg.indices ? index : '') + ']';
+        if (isFile(value)) {
+          key = pre;
+        }
 
         objectToFormData(value, cfg, fd, key);
       });

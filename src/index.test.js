@@ -262,3 +262,16 @@ test('File', () => {
   expect(formData.append).toHaveBeenCalledWith('foo', foo);
   expect(formData.get('foo')).toBe(foo);
 });
+
+test('Files', () => {
+  const bar = new File([], '');
+  const foo = [bar, bar];
+  const formData = objectToFormData({
+    foo,
+  });
+
+  expect(formData.append).toHaveBeenCalledTimes(2);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', bar);
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'foo', bar);
+  expect(formData.getAll('foo')).toEqual(foo);
+});
