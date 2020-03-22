@@ -53,7 +53,7 @@ export const objectToFormData = (obj, cfg, fd, pre) => {
     if (obj.length) {
       obj.forEach((value, index) => {
         let key = pre + '[' + (cfg.indices ? index : '') + ']';
-        if (isFile(value)) {
+        if (cfg.noFileListBrackets && isFile(value)) {
           key = pre;
         }
 

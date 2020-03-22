@@ -43,6 +43,12 @@ const options = {
    * defaults to false
    */
   booleansAsIntegers: false,
+
+  /**
+   * don't add brackets [] to File list
+   * defaults to false
+   */
+  noFileListBrackets: false,
 };
 
 const formData = objectToFormData(
