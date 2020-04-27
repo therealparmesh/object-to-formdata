@@ -14,7 +14,7 @@
   "author": "Parmesh Krishen",
   "main": "dist/index.js",
   "unpkg": "dist/index.umd.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.module.js",
   "source": "src/index.js",
   "types": "types.d.ts",
   "files": [
