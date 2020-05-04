@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "husky": "^4.2.5",
-    "jest": "^25.5.3",
+    "jest": "^26.0.0",
     "microbundle": "^0.11.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1"
