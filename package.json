@@ -25,7 +25,7 @@
   "scripts": {
     "build": "bundt",
     "prepublishOnly": "npm run build",
-    "test": "npm run build && jest --coverage"
+    "test": "jest --coverage"
   },
   "husky": {
     "hooks": {
