@@ -22,7 +22,7 @@ const isFile = (value) =>
   (typeof value.lastModifiedDate === 'object' ||
     typeof value.lastModified === 'number');
 
-const objectToFormData = (obj, cfg, fd, pre) => {
+const serialize = (obj, cfg, fd, pre) => {
   cfg = cfg || {};
 
   cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices;
@@ -54,7 +54,7 @@ const objectToFormData = (obj, cfg, fd, pre) => {
       obj.forEach((value, index) => {
         const key = pre + '[' + (cfg.indices ? index : '') + ']';
 
-        objectToFormData(value, cfg, fd, key);
+        serialize(value, cfg, fd, key);
       });
     }
   } else if (isDate(obj)) {
@@ -71,7 +71,7 @@ const objectToFormData = (obj, cfg, fd, pre) => {
 
       const key = pre ? pre + '[' + prop + ']' : prop;
 
-      objectToFormData(value, cfg, fd, key);
+      serialize(value, cfg, fd, key);
     });
   } else {
     fd.append(pre, obj);
@@ -81,5 +81,5 @@ const objectToFormData = (obj, cfg, fd, pre) => {
 };
 
 module.exports = {
-  objectToFormData,
+  serialize,
 };
