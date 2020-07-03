@@ -1,4 +1,4 @@
-const { objectToFormData } = require('..');
+const { objectToFormData } = require('.');
 
 const formDataAppend = global.FormData.prototype.append;
 

@@ -4,7 +4,7 @@ export type Options = {
   booleansAsIntegers?: boolean;
 };
 
-export const objectToFormData: <T = any>(
+export const objectToFormData: <T = {}>(
   object: T,
   options?: Options,
   existingFormData?: FormData,

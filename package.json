@@ -23,7 +23,7 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "microbundle",
+    "build": "bundt",
     "prepublishOnly": "npm run build",
     "test": "npm run build && jest --coverage"
   },
@@ -37,9 +37,9 @@
     "trailingComma": "all"
   },
   "devDependencies": {
+    "bundt": "^1.0.2",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
-    "microbundle": "^0.12.2",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1"
   }
