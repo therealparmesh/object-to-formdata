@@ -45,6 +45,12 @@ const options = {
    * defaults to false
    */
   booleansAsIntegers: false,
+
+  /**
+   * store arrays even if they're empty
+   * defaults to false
+   */
+  allowEmptyArrays: false,
 };
 
 const formData = serialize(

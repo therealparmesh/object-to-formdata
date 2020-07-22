@@ -35,6 +35,10 @@ const serialize = (obj, cfg, fd, pre) => {
     ? false
     : cfg.booleansAsIntegers;
 
+  cfg.allowEmptyArrays = isUndefined(cfg.allowEmptyArrays)
+    ? false
+    : cfg.allowEmptyArrays;
+
   fd = fd || new FormData();
 
   if (isUndefined(obj)) {
@@ -56,6 +60,8 @@ const serialize = (obj, cfg, fd, pre) => {
 
         serialize(value, cfg, fd, key);
       });
+    } else if (cfg.allowEmptyArrays) {
+      fd.append(pre + '[]', '');
     }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString());

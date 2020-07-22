@@ -241,6 +241,21 @@ test('Array with indices option', () => {
   expect(formData.get('foo[1]')).toBe('baz');
 });
 
+test('Array with allowEmptyArrays option', () => {
+  const formData = serialize(
+    {
+      foo: [],
+    },
+    {
+      allowEmptyArrays: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo[]', '');
+  expect(formData.get('foo[]')).toBe('');
+});
+
 test('Date', () => {
   const foo = new Date(2000, 0, 1, 1, 1, 1);
   const formData = serialize({
