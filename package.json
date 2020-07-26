@@ -1,36 +1,46 @@
 {
   "name": "object-to-formdata",
-  "version": "1.4.3",
-  "description": "A convenient JavaScript function that converts an object to a FormData instance",
-  "main": "index.js",
-  "scripts": {
-    "test": "nyc ava",
-    "test:watch": "ava --watch",
-    "lint": "standard --fix"
-  },
-  "repository": "therealparmesh/object-to-formdata",
+  "version": "4.1.0",
   "keywords": [
-    "object-to-formdata",
+    "form",
+    "formdata",
     "javascript",
     "object",
-    "formdata",
-    "form",
+    "object-to-formdata",
     "submit"
   ],
-  "author": "Parmesh Krishen",
+  "repository": "github:therealparmesh/object-to-formdata",
   "license": "MIT",
-  "devDependencies": {
-    "ava": "^0.25.0",
-    "formdata-polyfill": "^3.0.9",
-    "jsdom": "^11.7.0",
-    "nyc": "^11.6.0",
-    "sinon": "^5.0.0",
-    "standard": "^11.0.1"
+  "author": "Parmesh Krishen",
+  "main": "dist/index.js",
+  "unpkg": "dist/index.umd.js",
+  "module": "dist/index.module.js",
+  "source": "src/index.js",
+  "types": "types.d.ts",
+  "files": [
+    "src",
+    "dist",
+    "types.d.ts"
+  ],
+  "scripts": {
+    "build": "bundt",
+    "prepublishOnly": "npm run build",
+    "test": "jest --coverage"
   },
-  "standard": {
-    "globals": [
-      "FormData",
-      "File"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run test"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "bundt": "^1.0.2",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1"
   }
 }
