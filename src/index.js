@@ -20,16 +20,17 @@ function isReactNativeBlob(value) {
   return value && typeof value.uri !== 'undefined';
 }
 
-const isBlob =
+const isStandardBlob =
   typeof Blob !== 'undefined'
-    ? (value, isReactNative) =>
-        value instanceof Blob || (isReactNative && isReactNativeBlob(value))
-    : (value, isReactNative) =>
-        (value &&
-          typeof value.size === 'number' &&
-          typeof value.type === 'string' &&
-          typeof value.slice === 'function') ||
-        (isReactNative && isReactNativeBlob(value));
+    ? (value) => value instanceof Blob
+    : (value) =>
+        value &&
+        typeof value.size === 'number' &&
+        typeof value.type === 'string' &&
+        typeof value.slice === 'function';
+
+const isBlob = (value, isReactNative) =>
+  isStandardBlob(value) || (isReactNative && isReactNativeBlob(value));
 
 function isFormData(value) {
   return value instanceof FormData;
