@@ -1,6 +1,6 @@
 # object-to-formdata
 
-> Convenient JavaScript function that converts Objects to FormData instances.
+> Convenient JavaScript function that serializes Objects to FormData instances.
 
 [![npm](https://img.shields.io/npm/v/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
 [![npm](https://img.shields.io/npm/dt/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
@@ -13,10 +13,12 @@ npm install object-to-formdata
 
 ## Usage
 
+**NOTE: STARTING WITH VERSION 4.0.0, THE NAMED EXPORT HAS CHANGED!**
+
 **NOTE: STARTING WITH VERSION 3.0.0, THERE IS NO DEFAULT EXPORT!**
 
 ```js
-import { objectToFormData } from 'object-to-formdata';
+import { serialize } from 'object-to-formdata';
 
 const object = {
   /**
@@ -45,13 +47,19 @@ const options = {
   booleansAsIntegers: false,
 
   /**
+   * store arrays even if they're empty
+   * defaults to false
+   */
+  allowEmptyArrays: false,
+
+  /**
    * don't add brackets [] to File list
    * defaults to false
    */
   noFileListBrackets: false,
 };
 
-const formData = objectToFormData(
+const formData = serialize(
   object,
   options, // optional
   existingFormData, // optional

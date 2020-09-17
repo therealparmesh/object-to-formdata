@@ -1,6 +1,6 @@
 {
   "name": "object-to-formdata",
-  "version": "3.0.6",
+  "version": "4.1.0",
   "keywords": [
     "form",
     "formdata",
@@ -14,7 +14,7 @@
   "author": "Parmesh Krishen",
   "main": "dist/index.js",
   "unpkg": "dist/index.umd.js",
-  "module": "dist/index.mjs",
+  "module": "dist/index.module.js",
   "source": "src/index.js",
   "types": "types.d.ts",
   "files": [
@@ -23,9 +23,9 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "microbundle",
+    "build": "bundt",
     "prepublishOnly": "npm run build",
-    "test": "npm run build && jest --coverage"
+    "test": "jest --coverage"
   },
   "husky": {
     "hooks": {
@@ -37,10 +37,10 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "husky": "^4.2.3",
-    "jest": "^25.1.0",
-    "microbundle": "^0.11.0",
-    "prettier": "^1.19.1",
-    "pretty-quick": "^2.0.1"
+    "bundt": "^1.1.1",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "prettier": "^2.1.1",
+    "pretty-quick": "^3.0.2"
   }
 }

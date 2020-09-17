@@ -1,4 +1,4 @@
-const { objectToFormData } = require('..');
+const { serialize } = require('.');
 
 const formDataAppend = global.FormData.prototype.append;
 
@@ -7,7 +7,7 @@ beforeEach(() => {
 });
 
 test('undefined', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: undefined,
   });
 
@@ -16,7 +16,7 @@ test('undefined', () => {
 });
 
 test('null', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: null,
   });
 
@@ -26,7 +26,7 @@ test('null', () => {
 });
 
 test('null with nullsAsUndefineds option', () => {
-  const formData = objectToFormData(
+  const formData = serialize(
     {
       foo: null,
     },
@@ -40,7 +40,7 @@ test('null with nullsAsUndefineds option', () => {
 });
 
 test('boolean', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: true,
     bar: false,
   });
@@ -53,7 +53,7 @@ test('boolean', () => {
 });
 
 test('boolean with booleansAsIntegers option', () => {
-  const formData = objectToFormData(
+  const formData = serialize(
     {
       foo: true,
       bar: false,
@@ -71,7 +71,7 @@ test('boolean with booleansAsIntegers option', () => {
 });
 
 test('integer', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: 1,
   });
 
@@ -81,7 +81,7 @@ test('integer', () => {
 });
 
 test('float', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: 1.01,
   });
 
@@ -91,7 +91,7 @@ test('float', () => {
 });
 
 test('string', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: 'bar',
   });
 
@@ -101,7 +101,7 @@ test('string', () => {
 });
 
 test('empty string', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: '',
   });
 
@@ -111,7 +111,7 @@ test('empty string', () => {
 });
 
 test('Object', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: {
       bar: 'baz',
       qux: 'quux',
@@ -126,7 +126,7 @@ test('Object', () => {
 });
 
 test('empty Object', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: {},
   });
 
@@ -135,7 +135,7 @@ test('empty Object', () => {
 });
 
 test('Object in Array', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: [
       {
         bar: 'baz',
@@ -154,7 +154,7 @@ test('Object in Array', () => {
 });
 
 test('Object in Object', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: {
       bar: {
         baz: {
@@ -170,7 +170,7 @@ test('Object in Object', () => {
 });
 
 test('Array', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: ['bar', 'baz'],
   });
 
@@ -181,7 +181,7 @@ test('Array', () => {
 });
 
 test('empty Array', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: [],
   });
 
@@ -190,7 +190,7 @@ test('empty Array', () => {
 });
 
 test('Array in Array', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: [[['bar', 'baz']]],
   });
 
@@ -201,7 +201,7 @@ test('Array in Array', () => {
 });
 
 test('Array in Object', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     foo: {
       bar: ['baz', 'qux'],
     },
@@ -214,7 +214,7 @@ test('Array in Object', () => {
 });
 
 test('Array where key ends with "[]"', () => {
-  const formData = objectToFormData({
+  const formData = serialize({
     'foo[]': ['bar', 'baz'],
   });
 
@@ -225,7 +225,7 @@ test('Array where key ends with "[]"', () => {
 });
 
 test('Array with indices option', () => {
-  const formData = objectToFormData(
+  const formData = serialize(
     {
       foo: ['bar', 'baz'],
     },
@@ -241,9 +241,24 @@ test('Array with indices option', () => {
   expect(formData.get('foo[1]')).toBe('baz');
 });
 
+test('Array with allowEmptyArrays option', () => {
+  const formData = serialize(
+    {
+      foo: [],
+    },
+    {
+      allowEmptyArrays: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo[]', '');
+  expect(formData.get('foo[]')).toBe('');
+});
+
 test('Date', () => {
   const foo = new Date(2000, 0, 1, 1, 1, 1);
-  const formData = objectToFormData({
+  const formData = serialize({
     foo,
   });
 
@@ -254,7 +269,7 @@ test('Date', () => {
 
 test('File', () => {
   const foo = new File([], '');
-  const formData = objectToFormData({
+  const formData = serialize({
     foo,
   });
 
