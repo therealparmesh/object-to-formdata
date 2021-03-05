@@ -75,7 +75,11 @@ const serialize = (obj, cfg, fd, pre) => {
         }
       }
 
-      const key = pre ? pre + '[' + prop + ']' : prop;
+      const key = pre
+        ? cfg.dotNotation
+          ? pre + '.' + prop
+          : pre + '[' + prop + ']'
+        : prop;
 
       serialize(value, cfg, fd, key);
     });
