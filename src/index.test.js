@@ -277,3 +277,24 @@ test('File', () => {
   expect(formData.append).toHaveBeenCalledWith('foo', foo);
   expect(formData.get('foo')).toBe(foo);
 });
+
+test('DotNotation', () => {
+  const formData = serialize(
+    {
+      foo: {
+        bar: {
+          baz: {
+            qux: 'quux',
+          },
+        },
+      },
+    },
+    {
+      dotNotation: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo.bar.baz.qux', 'quux');
+  expect(formData.get('foo.bar.baz.qux')).toBe('quux');
+});

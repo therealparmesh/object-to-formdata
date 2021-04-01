@@ -51,6 +51,12 @@ const options = {
    * defaults to false
    */
   allowEmptyArrays: false,
+
+  /**
+   * Use the dot–notation for path expressions
+   * defaults to false
+   */
+  dotNotation: false,
 };
 
 const formData = serialize(
