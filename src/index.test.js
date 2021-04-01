@@ -90,6 +90,16 @@ test('float', () => {
   expect(formData.get('foo')).toBe('1.01');
 });
 
+test('not a number', () => {
+  const formData = serialize({
+    foo: NaN,
+  });
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', NaN);
+  expect(formData.get('foo')).toBe('NaN');
+});
+
 test('string', () => {
   const formData = serialize({
     foo: 'bar',
@@ -108,6 +118,52 @@ test('empty string', () => {
   expect(formData.append).toHaveBeenCalledTimes(1);
   expect(formData.append).toHaveBeenCalledWith('foo', '');
   expect(formData.get('foo')).toBe('');
+});
+
+test('Blob', () => {
+  const foo = new Blob([]);
+  const formData = serialize({
+    foo,
+  });
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', foo);
+  // expect(formData.get('foo')).toBe(new File([foo], ''));  // TODO fix this
+});
+
+test('ReactNative "blob"', () => {
+  const FormDataOrig = global.FormData;
+  global.FormData = class FormData {
+    constructor() {
+      this.$ = new FormDataOrig();
+      this.get = this.$.get.bind(this.$);
+      this.getAll = this.$.getAll.bind(this.$);
+      this.getParts = function () {};
+      this.append = jest.fn(this.$.append.bind(this.$));
+    }
+  };
+
+  const foo = { uri: 'content://...' };
+  const formData = serialize({
+    foo,
+  });
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', foo);
+  expect(formData.get('foo')).toBe('[object Object]');
+
+  global.FormData = FormDataOrig;
+});
+
+test('File', () => {
+  const foo = new File([], {});
+  const formData = serialize({
+    foo,
+  });
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', foo);
+  expect(formData.get('foo')).toBe(foo);
 });
 
 test('Object', () => {
@@ -276,4 +332,19 @@ test('File', () => {
   expect(formData.append).toHaveBeenCalledTimes(1);
   expect(formData.append).toHaveBeenCalledWith('foo', foo);
   expect(formData.get('foo')).toBe(foo);
+});
+
+test('FormData instance as second parameter', () => {
+  const existingFormData = new FormData();
+  const formData = serialize(
+    {
+      foo: 'bar',
+    },
+    existingFormData,
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', 'bar');
+  expect(formData.get('foo')).toBe('bar');
+  expect(formData).toBe(existingFormData);
 });

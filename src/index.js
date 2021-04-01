@@ -10,19 +10,39 @@ const isArray = (value) => Array.isArray(value);
 
 const isDate = (value) => value instanceof Date;
 
-const isBlob = (value) =>
-  value &&
-  typeof value.size === 'number' &&
-  typeof value.type === 'string' &&
-  typeof value.slice === 'function';
+/**
+ * React Native "blob": an object with a `uri` attribute. Optionally, it can
+ * also have a `name` and `type` attribute to specify filename and content type
+ *
+ * @see https://github.com/facebook/react-native/blob/26684cf3adf4094eb6c405d345a75bf8c7c0bf88/Libraries/Network/FormData.js#L68-L71
+ */
+function isReactNativeBlob(value) {
+  return value && typeof value.uri !== 'undefined';
+}
 
-const isFile = (value) =>
-  isBlob(value) &&
-  typeof value.name === 'string' &&
-  (typeof value.lastModifiedDate === 'object' ||
-    typeof value.lastModified === 'number');
+const isStandardBlob =
+  typeof Blob !== 'undefined'
+    ? (value) => value instanceof Blob
+    : (value) =>
+        value &&
+        typeof value.size === 'number' &&
+        typeof value.type === 'string' &&
+        typeof value.slice === 'function';
+
+const isBlob = (value, isReactNative) =>
+  isStandardBlob(value) || (isReactNative && isReactNativeBlob(value));
+
+function isFormData(value) {
+  return value instanceof FormData;
+}
 
 const serialize = (obj, cfg, fd, pre) => {
+  if (isFormData(cfg)) {
+    pre = fd;
+    fd = cfg;
+    cfg = null;
+  }
+
   cfg = cfg || {};
 
   cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices;
@@ -40,6 +60,9 @@ const serialize = (obj, cfg, fd, pre) => {
     : cfg.allowEmptyArrays;
 
   fd = fd || new FormData();
+
+  // ReactNative `FormData` has a non-standard `getParts()` method
+  const isReactNative = typeof fd.getParts !== 'undefined';
 
   if (isUndefined(obj)) {
     return fd;
@@ -65,7 +88,7 @@ const serialize = (obj, cfg, fd, pre) => {
     }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString());
-  } else if (isObject(obj) && !isFile(obj) && !isBlob(obj)) {
+  } else if (isObject(obj) && !isBlob(obj, isReactNative)) {
     Object.keys(obj).forEach((prop) => {
       const value = obj[prop];
 
