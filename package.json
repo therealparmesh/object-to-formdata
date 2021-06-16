@@ -37,7 +37,7 @@
     "trailingComma": "all"
   },
   "devDependencies": {
-    "bundt": "^1.1.2",
+    "bundt": "^1.1.4",
     "husky": "^4.3.6",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
