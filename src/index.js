@@ -25,6 +25,8 @@ const isFile = (value) =>
 const serialize = (obj, cfg, fd, pre) => {
   cfg = cfg || {};
 
+  cfg.indices = isUndefined(cfg.withoutArrayKey) ? false : cfg.withoutArrayKey;
+  
   cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices;
 
   cfg.nullsAsUndefineds = isUndefined(cfg.nullsAsUndefineds)
@@ -56,12 +58,14 @@ const serialize = (obj, cfg, fd, pre) => {
   } else if (isArray(obj)) {
     if (obj.length) {
       obj.forEach((value, index) => {
-        const key = pre + '[' + (cfg.indices ? index : '') + ']';
+        const key = withoutArrayKey ? pre : pre + '[' + (cfg.indices ? index : '') + ']';
 
         serialize(value, cfg, fd, key);
       });
     } else if (cfg.allowEmptyArrays) {
-      fd.append(pre + '[]', '');
+      const key = withoutArrayKey ? pre : pre + '[]';
+      
+      fd.append(key, '');
     }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString());
