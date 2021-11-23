@@ -12,35 +12,21 @@
   "repository": "github:therealparmesh/object-to-formdata",
   "license": "MIT",
   "author": "Parmesh Krishen",
-  "main": "dist/index.js",
-  "unpkg": "dist/index.umd.js",
-  "module": "dist/index.module.js",
-  "source": "src/index.js",
+  "main": "src",
   "types": "types.d.ts",
-  "files": [
-    "src",
-    "dist",
-    "types.d.ts"
-  ],
   "scripts": {
-    "build": "bundt",
-    "prepublishOnly": "npm run build",
+    "prepare": "pro-commit",
+    "pro-commit:task": "pretty-quick --staged",
     "test": "jest --coverage"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run test"
-    }
   },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
   },
   "devDependencies": {
-    "bundt": "^1.1.2",
-    "husky": "^4.3.6",
     "jest": "^26.6.3",
-    "prettier": "^2.2.1",
-    "pretty-quick": "^3.1.0"
+    "prettier": "^2.0.5",
+    "pretty-quick": "^3.0.0",
+    "pro-commit": "^1.2.1"
   }
 }
