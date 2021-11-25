@@ -53,10 +53,10 @@ const options = {
   allowEmptyArrays: false,
 
   /**
-   * don't add brackets [] to File list
+   * don't include array notation in FormData keys for Files in arrays
    * defaults to false
    */
-  noFileListBrackets: false,
+  noFilesWithArrayNotation: false,
 };
 
 const formData = serialize(

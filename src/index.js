@@ -39,6 +39,10 @@ const serialize = (obj, cfg, fd, pre) => {
     ? false
     : cfg.allowEmptyArrays;
 
+  cfg.noFilesWithArrayNotation = isUndefined(cfg.noFilesWithArrayNotation)
+    ? false
+    : cfg.noFilesWithArrayNotation;
+
   fd = fd || new FormData();
 
   if (isUndefined(obj)) {
@@ -57,7 +61,8 @@ const serialize = (obj, cfg, fd, pre) => {
     if (obj.length) {
       obj.forEach((value, index) => {
         let key = pre + '[' + (cfg.indices ? index : '') + ']';
-        if (cfg.noFileListBrackets && isFile(value)) {
+
+        if (cfg.noFilesWithArrayNotation && isFile(value)) {
           key = pre;
         }
 
