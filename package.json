@@ -1,6 +1,6 @@
 {
   "name": "object-to-formdata",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "keywords": [
     "form",
     "formdata",
@@ -12,35 +12,24 @@
   "repository": "github:therealparmesh/object-to-formdata",
   "license": "MIT",
   "author": "Parmesh Krishen",
-  "main": "dist/index.js",
-  "unpkg": "dist/index.umd.js",
-  "module": "dist/index.module.js",
-  "source": "src/index.js",
+  "main": "src",
   "types": "types.d.ts",
-  "files": [
-    "src",
-    "dist",
-    "types.d.ts"
-  ],
   "scripts": {
-    "build": "bundt",
-    "prepublishOnly": "npm run build",
+    "prepare": "pro-commit",
+    "pro-commit:task": "pretty-quick --staged",
     "test": "jest --coverage"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run test"
-    }
   },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
   },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
   "devDependencies": {
-    "bundt": "^1.1.1",
-    "husky": "^4.3.0",
-    "jest": "^26.4.2",
-    "prettier": "^2.1.1",
-    "pretty-quick": "^3.0.2"
+    "jest": "^27.3.1",
+    "prettier": "^2.4.1",
+    "pretty-quick": "^3.1.2",
+    "pro-commit": "^1.2.1"
   }
 }
