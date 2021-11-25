@@ -281,9 +281,14 @@ test('File', () => {
 test('Files', () => {
   const bar = new File([], '');
   const foo = [bar, bar];
-  const formData = objectToFormData({
-    foo,
-  });
+  const formData = objectToFormData(
+    {
+      foo,
+    },
+    {
+      noFileListBrackets: true,
+    },
+  );
 
   expect(formData.append).toHaveBeenCalledTimes(2);
   expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', bar);

@@ -51,6 +51,12 @@ const options = {
    * defaults to false
    */
   allowEmptyArrays: false,
+
+  /**
+   * don't add brackets [] to File list
+   * defaults to false
+   */
+  noFileListBrackets: false,
 };
 
 const formData = serialize(
