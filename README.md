@@ -51,6 +51,12 @@ const options = {
    * defaults to false
    */
   allowEmptyArrays: false,
+
+  /**
+   * don't include array notation in FormData keys for Files in arrays
+   * defaults to false
+   */
+  noFilesWithArrayNotation: false,
 };
 
 const formData = serialize(

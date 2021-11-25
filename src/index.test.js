@@ -277,3 +277,24 @@ test('File', () => {
   expect(formData.append).toHaveBeenCalledWith('foo', foo);
   expect(formData.get('foo')).toBe(foo);
 });
+
+test('File with noFilesWithArrayNotation option', () => {
+  const bar = new File([], '');
+  const baz = new File([], '');
+  const foo = [bar, baz, 'qux'];
+  const formData = serialize(
+    {
+      foo,
+    },
+    {
+      noFilesWithArrayNotation: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(3);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', bar);
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'foo', baz);
+  expect(formData.append).toHaveBeenNthCalledWith(3, 'foo[]', 'qux');
+  expect(formData.getAll('foo')).toEqual([bar, baz]);
+  expect(formData.getAll('foo[]')).toEqual(['qux']);
+});

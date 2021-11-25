@@ -3,6 +3,7 @@ export type Options = {
   nullsAsUndefineds?: boolean;
   booleansAsIntegers?: boolean;
   allowEmptyArrays?: boolean;
+  noFilesWithArrayNotation?: boolean;
 };
 
 export const serialize: <T = {}>(
