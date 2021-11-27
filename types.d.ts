@@ -6,9 +6,9 @@ export type Options = {
   noFilesWithArrayNotation?: boolean;
 };
 
-export const serialize: <T = {}>(
+export function serialize<T = {}>(
   object: T,
   options?: Options,
   existingFormData?: FormData,
   keyPrefix?: string,
-) => FormData;
+): FormData;

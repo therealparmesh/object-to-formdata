@@ -1,49 +1,58 @@
-const isUndefined = (value) => value === undefined;
+function isUndefined(value) {
+  return value === undefined;
+}
 
-const isNull = (value) => value === null;
+function isNull(value) {
+  return value === null;
+}
 
-const isBoolean = (value) => typeof value === 'boolean';
+function isBoolean(value) {
+  return typeof value === 'boolean';
+}
 
-const isObject = (value) => value === Object(value);
+function isObject(value) {
+  return value === Object(value);
+}
 
-const isArray = (value) => Array.isArray(value);
+function isArray(value) {
+  return Array.isArray(value);
+}
 
-const isDate = (value) => value instanceof Date;
+function isDate(value) {
+  return value instanceof Date;
+}
 
-const isBlob = (value) =>
-  value &&
-  typeof value.size === 'number' &&
-  typeof value.type === 'string' &&
-  typeof value.slice === 'function';
+function isBlob(value) {
+  return (
+    value &&
+    typeof value.size === 'number' &&
+    typeof value.type === 'string' &&
+    typeof value.slice === 'function'
+  );
+}
 
-const isFile = (value) =>
-  isBlob(value) &&
-  typeof value.name === 'string' &&
-  (typeof value.lastModifiedDate === 'object' ||
-    typeof value.lastModified === 'number');
+function isFile(value) {
+  return (
+    isBlob(value) &&
+    typeof value.name === 'string' &&
+    (typeof value.lastModifiedDate === 'object' ||
+      typeof value.lastModified === 'number')
+  );
+}
 
-const serialize = (obj, cfg, fd, pre) => {
+function initCfgValue(value) {
+  return isUndefined(value) ? false : value;
+}
+
+function serialize(obj, cfg, fd, pre) {
   cfg = cfg || {};
-
-  cfg.indices = isUndefined(cfg.indices) ? false : cfg.indices;
-
-  cfg.nullsAsUndefineds = isUndefined(cfg.nullsAsUndefineds)
-    ? false
-    : cfg.nullsAsUndefineds;
-
-  cfg.booleansAsIntegers = isUndefined(cfg.booleansAsIntegers)
-    ? false
-    : cfg.booleansAsIntegers;
-
-  cfg.allowEmptyArrays = isUndefined(cfg.allowEmptyArrays)
-    ? false
-    : cfg.allowEmptyArrays;
-
-  cfg.noFilesWithArrayNotation = isUndefined(cfg.noFilesWithArrayNotation)
-    ? false
-    : cfg.noFilesWithArrayNotation;
-
   fd = fd || new FormData();
+
+  Object.keys(cfg).forEach((opt) => {
+    const value = cfg[opt];
+
+    cfg[opt] = isUndefined(value) ? false : value;
+  });
 
   if (isUndefined(obj)) {
     return fd;
@@ -92,7 +101,7 @@ const serialize = (obj, cfg, fd, pre) => {
   }
 
   return fd;
-};
+}
 
 module.exports = {
   serialize,
