@@ -40,7 +40,7 @@ function isFile(value) {
   );
 }
 
-function initCfgValue(value) {
+function initCfg(value) {
   return isUndefined(value) ? false : value;
 }
 
@@ -48,11 +48,11 @@ function serialize(obj, cfg, fd, pre) {
   cfg = cfg || {};
   fd = fd || new FormData();
 
-  Object.keys(cfg).forEach((opt) => {
-    const value = cfg[opt];
-
-    cfg[opt] = isUndefined(value) ? false : value;
-  });
+  cfg.indices = initCfg(cfg.indices);
+  cfg.nullsAsUndefineds = initCfg(cfg.nullsAsUndefineds);
+  cfg.booleansAsIntegers = initCfg(cfg.booleansAsIntegers);
+  cfg.allowEmptyArrays = initCfg(cfg.allowEmptyArrays);
+  cfg.noFilesWithArrayNotation = initCfg(cfg.noFilesWithArrayNotation);
 
   if (isUndefined(obj)) {
     return fd;
