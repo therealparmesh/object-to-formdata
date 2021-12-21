@@ -22,12 +22,17 @@ function isDate(value) {
   return value instanceof Date;
 }
 
+function isReactNativeBlob(value) {
+  return new FormData().getParts && value && !isUndefined(value.uri);
+}
+
 function isBlob(value) {
   return (
-    value &&
-    typeof value.size === 'number' &&
-    typeof value.type === 'string' &&
-    typeof value.slice === 'function'
+    (value &&
+      typeof value.size === 'number' &&
+      typeof value.type === 'string' &&
+      typeof value.slice === 'function') ||
+    isReactNativeBlob(value)
   );
 }
 
@@ -35,8 +40,7 @@ function isFile(value) {
   return (
     isBlob(value) &&
     typeof value.name === 'string' &&
-    (typeof value.lastModifiedDate === 'object' ||
-      typeof value.lastModified === 'number')
+    (isObject(value.lastModifiedDate) || typeof value.lastModified === 'number')
   );
 }
 
@@ -83,7 +87,7 @@ function serialize(obj, cfg, fd, pre) {
     }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString());
-  } else if (isObject(obj) && !isFile(obj) && !isBlob(obj)) {
+  } else if (isObject(obj) && !isBlob(obj)) {
     Object.keys(obj).forEach((prop) => {
       const value = obj[prop];
 

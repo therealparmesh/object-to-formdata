@@ -322,3 +322,31 @@ test('File with noFilesWithArrayNotation option', () => {
   expect(formData.getAll('foo')).toEqual([bar, baz]);
   expect(formData.getAll('foo[]')).toEqual(['qux']);
 });
+
+test('Blob', () => {
+  const foo = new Blob([]);
+  const formData = serialize({
+    foo,
+  });
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', foo);
+  expect(formData.get('foo')).toEqual(new File([], ''));
+});
+
+test('React Native Blob', () => {
+  global.FormData.prototype.getParts = () => {};
+
+  const foo = {
+    uri: 'content://...',
+  };
+  const formData = serialize({
+    foo,
+  });
+
+  delete global.FormData.prototype.getParts;
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', foo);
+  expect(formData.get('foo')).toBe('[object Object]');
+});
