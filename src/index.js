@@ -23,12 +23,16 @@ function isDate(value) {
 }
 
 function isReactNativeBlob(value) {
-  return new FormData().getParts && value && !isUndefined(value.uri);
+  return (
+    typeof new FormData().getParts === 'function' &&
+    isObject(value) &&
+    !isUndefined(value.uri)
+  );
 }
 
 function isBlob(value) {
   return (
-    (value &&
+    (isObject(value) &&
       typeof value.size === 'number' &&
       typeof value.type === 'string' &&
       typeof value.slice === 'function') ||
