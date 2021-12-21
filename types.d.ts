@@ -4,6 +4,7 @@ export type Options = {
   booleansAsIntegers?: boolean;
   allowEmptyArrays?: boolean;
   noFilesWithArrayNotation?: boolean;
+  dotsForObjectNotation?: boolean;
 };
 
 export function serialize<T = {}>(

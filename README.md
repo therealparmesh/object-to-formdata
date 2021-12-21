@@ -57,6 +57,12 @@ const options = {
    * defaults to false
    */
   noFilesWithArrayNotation: false,
+
+  /**
+   * use dots instead of brackets for object notation in FormData keys
+   * defaults to false
+   */
+  dotsForObjectNotation: false,
 };
 
 const formData = serialize(

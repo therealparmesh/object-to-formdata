@@ -53,6 +53,7 @@ function serialize(obj, cfg, fd, pre) {
   cfg.booleansAsIntegers = initCfg(cfg.booleansAsIntegers);
   cfg.allowEmptyArrays = initCfg(cfg.allowEmptyArrays);
   cfg.noFilesWithArrayNotation = initCfg(cfg.noFilesWithArrayNotation);
+  cfg.dotsForObjectNotation = initCfg(cfg.dotsForObjectNotation);
 
   if (isUndefined(obj)) {
     return fd;
@@ -92,7 +93,11 @@ function serialize(obj, cfg, fd, pre) {
         }
       }
 
-      const key = pre ? pre + '[' + prop + ']' : prop;
+      const key = pre
+        ? cfg.dotsForObjectNotation
+          ? pre + '.' + prop
+          : pre + '[' + prop + ']'
+        : prop;
 
       serialize(value, cfg, fd, key);
     });

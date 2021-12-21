@@ -169,6 +169,30 @@ test('Object in Object', () => {
   expect(formData.get('foo[bar][baz][qux]')).toBe('quux');
 });
 
+test('Object with dotsForObjectNotation option', () => {
+  const formData = serialize(
+    {
+      foo: {
+        bar: 'baz',
+        qux: [
+          {
+            quux: 'corge',
+          },
+        ],
+      },
+    },
+    {
+      dotsForObjectNotation: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(2);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo.bar', 'baz');
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'foo.qux[].quux', 'corge');
+  expect(formData.get('foo.bar')).toBe('baz');
+  expect(formData.get('foo.qux[].quux')).toBe('corge');
+});
+
 test('Array', () => {
   const formData = serialize({
     foo: ['bar', 'baz'],
