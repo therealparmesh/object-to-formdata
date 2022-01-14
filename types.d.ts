@@ -3,6 +3,7 @@ export type Options = {
   nullsAsUndefineds?: boolean;
   booleansAsIntegers?: boolean;
   allowEmptyArrays?: boolean;
+  noAttributesWithArrayNotation?: boolean;
   noFilesWithArrayNotation?: boolean;
   dotsForObjectNotation?: boolean;
 };

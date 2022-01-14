@@ -60,6 +60,9 @@ function serialize(obj, cfg, fd, pre) {
   cfg.nullsAsUndefineds = initCfg(cfg.nullsAsUndefineds);
   cfg.booleansAsIntegers = initCfg(cfg.booleansAsIntegers);
   cfg.allowEmptyArrays = initCfg(cfg.allowEmptyArrays);
+  cfg.noAttributesWithArrayNotation = initCfg(
+    cfg.noAttributesWithArrayNotation,
+  );
   cfg.noFilesWithArrayNotation = initCfg(cfg.noFilesWithArrayNotation);
   cfg.dotsForObjectNotation = initCfg(cfg.dotsForObjectNotation);
 
@@ -80,14 +83,17 @@ function serialize(obj, cfg, fd, pre) {
       obj.forEach((value, index) => {
         let key = pre + '[' + (cfg.indices ? index : '') + ']';
 
-        if (cfg.noFilesWithArrayNotation && isFile(value)) {
+        if (
+          cfg.noAttributesWithArrayNotation ||
+          (cfg.noFilesWithArrayNotation && isFile(value))
+        ) {
           key = pre;
         }
 
         serialize(value, cfg, fd, key);
       });
     } else if (cfg.allowEmptyArrays) {
-      fd.append(pre + '[]', '');
+      fd.append(cfg.noAttributesWithArrayNotation ? pre : pre + '[]', '');
     }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString());
