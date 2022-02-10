@@ -27,6 +27,7 @@
     "testEnvironment": "jsdom"
   },
   "devDependencies": {
+    "form-data": "^4.0.0",
     "jest": "^27.4.7",
     "prettier": "^2.5.1",
     "pretty-quick": "^3.1.3",

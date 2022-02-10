@@ -68,9 +68,21 @@ const options = {
 const formData = serialize(
   object,
   options, // optional
-  existingFormData, // optional
-  keyPrefix, // optional
+  existingFormData, // optional: allows you to send an existing FormData instance to be used
+  keyPrefix, // optional: prefix all keys with this value
 );
+
+console.log(formData);
+```
+
+## Usage in Node.js
+
+```js
+const FormData = require('form-data');
+
+const object = { foo: [1, 2, 3] };
+
+const formData = serialize(object, undefined, new FormData());
 
 console.log(formData);
 ```

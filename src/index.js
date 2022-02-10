@@ -24,6 +24,7 @@ function isDate(value) {
 
 function isReactNativeBlob(value) {
   return (
+    typeof FormData !== 'undefined' &&
     typeof new FormData().getParts === 'function' &&
     isObject(value) &&
     !isUndefined(value.uri)
@@ -54,7 +55,9 @@ function initCfg(value) {
 
 function serialize(obj, cfg, fd, pre) {
   cfg = cfg || {};
-  fd = fd || new FormData();
+  if (typeof FormData !== 'undefined' && !fd) {
+    fd = new FormData();
+  }
 
   cfg.indices = initCfg(cfg.indices);
   cfg.nullsAsUndefineds = initCfg(cfg.nullsAsUndefineds);
