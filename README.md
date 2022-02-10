@@ -74,3 +74,15 @@ const formData = serialize(
 
 console.log(formData);
 ```
+
+## Usage in Node.js
+
+```js
+const FormData = require('form-data');
+
+const object = { foo: [1, 2, 3] };
+
+const formData = serialize(object, undefined, new FormData());
+
+console.log(formData);
+```
