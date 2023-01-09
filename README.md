@@ -65,7 +65,7 @@ const options = {
   dotsForObjectNotation: false,
   
   /**
-   * display dates in local timezone, with the timezone offset dsplayed.
+   * display dates in local timezone, with the timezone offset displayed.
    * otherwise, all dates will be converted to the UTC timezone
    */
    dateWithTimezone: false,
