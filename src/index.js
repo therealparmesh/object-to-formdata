@@ -39,6 +39,23 @@ function isFile(value, isReactNative) {
   );
 }
 
+function toTzIsoString(date) {
+  var tzo = -date.getTimezoneOffset(),
+      dif = tzo >= 0 ? '+' : '-',
+      pad = function(num) {
+          return (num < 10 ? '0' : '') + num;
+      };
+
+  return date.getFullYear() +
+      '-' + pad(date.getMonth() + 1) +
+      '-' + pad(date.getDate()) +
+      'T' + pad(date.getHours()) +
+      ':' + pad(date.getMinutes()) +
+      ':' + pad(date.getSeconds()) +
+      dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+      ':' + pad(Math.abs(tzo) % 60);
+}
+
 function initCfg(value) {
   return isUndefined(value) ? false : value;
 }
@@ -53,6 +70,7 @@ function serialize(obj, cfg, fd, pre) {
   cfg.allowEmptyArrays = initCfg(cfg.allowEmptyArrays);
   cfg.noFilesWithArrayNotation = initCfg(cfg.noFilesWithArrayNotation);
   cfg.dotsForObjectNotation = initCfg(cfg.dotsForObjectNotation);
+  cfg.dateWithTimezone = initCfg(cfg.dateWithTimezone);
 
   const isReactNative = typeof fd.getParts === 'function';
 
@@ -83,7 +101,11 @@ function serialize(obj, cfg, fd, pre) {
       fd.append(pre + '[]', '');
     }
   } else if (isDate(obj)) {
-    fd.append(pre, obj.toISOString());
+    if (cfg.dateWithTimezone) {
+      fd.append(pre, toTzIsoString(obj));
+    } else {
+      fd.append(pre, obj.toISOString());
+    }
   } else if (isObject(obj) && !isBlob(obj, isReactNative)) {
     Object.keys(obj).forEach((prop) => {
       const value = obj[prop];
