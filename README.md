@@ -63,6 +63,12 @@ const options = {
    * defaults to false
    */
   dotsForObjectNotation: false,
+  
+  /**
+   * display dates in local timezone, with the timezone offset dsplayed.
+   * otherwise, all dates will be converted to the UTC timezone
+   */
+   dateWithTimezone: false,
 };
 
 const formData = serialize(
