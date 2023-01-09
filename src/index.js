@@ -40,20 +40,12 @@ function isFile(value, isReactNative) {
 }
 
 function toTzIsoString(date) {
-  var tzo = -date.getTimezoneOffset(),
-      dif = tzo >= 0 ? '+' : '-',
-      pad = function(num) {
-          return (num < 10 ? '0' : '') + num;
-      };
-
-  return date.getFullYear() +
-      '-' + pad(date.getMonth() + 1) +
-      '-' + pad(date.getDate()) +
-      'T' + pad(date.getHours()) +
-      ':' + pad(date.getMinutes()) +
-      ':' + pad(date.getSeconds()) +
-      dif + pad(Math.floor(Math.abs(tzo) / 60)) +
-      ':' + pad(Math.abs(tzo) % 60);
+    const off    = date.getTimezoneOffset();
+    const absoff = Math.abs(off);
+    return (new Date(date.getTime() - off*60*1000).toISOString().substr(0,23) +
+            (off > 0 ? '-' : '+') + 
+            Math.floor(absoff / 60).toFixed(0).padStart(2,'0') + ':' + 
+            (absoff % 60).toString().padStart(2,'0'))
 }
 
 function initCfg(value) {
