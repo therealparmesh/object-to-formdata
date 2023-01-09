@@ -5,6 +5,7 @@ export type Options = {
   allowEmptyArrays?: boolean;
   noFilesWithArrayNotation?: boolean;
   dotsForObjectNotation?: boolean;
+  dateWithTimezone?: boolean;
 };
 
 export function serialize<T = {}>(
