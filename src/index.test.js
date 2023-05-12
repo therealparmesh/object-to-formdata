@@ -204,6 +204,22 @@ test('Array', () => {
   expect(formData.getAll('foo[]')).toEqual(['bar', 'baz']);
 });
 
+test('Array with noAttributesWithArrayNotation option', () => {
+  const formData = serialize(
+    {
+      foo: ['bar', 'baz'],
+    },
+    {
+      noAttributesWithArrayNotation: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(2);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', 'bar');
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'foo', 'baz');
+  expect(formData.getAll('foo')).toEqual(['bar', 'baz']);
+});
+
 test('empty Array', () => {
   const formData = serialize({
     foo: [],
@@ -222,6 +238,22 @@ test('Array in Array', () => {
   expect(formData.append).toHaveBeenNthCalledWith(1, 'foo[][][]', 'bar');
   expect(formData.append).toHaveBeenNthCalledWith(2, 'foo[][][]', 'baz');
   expect(formData.getAll('foo[][][]')).toEqual(['bar', 'baz']);
+});
+
+test('Array in Array with noAttributesWithArrayNotation option', () => {
+  const formData = serialize(
+    {
+      foo: [[['bar', 'baz']]],
+    },
+    {
+      noAttributesWithArrayNotation: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(2);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', 'bar');
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'foo', 'baz');
+  expect(formData.getAll('foo')).toEqual(['bar', 'baz']);
 });
 
 test('Array in Object', () => {
@@ -263,6 +295,23 @@ test('Array with indices option', () => {
   expect(formData.append).toHaveBeenNthCalledWith(2, 'foo[1]', 'baz');
   expect(formData.get('foo[0]')).toBe('bar');
   expect(formData.get('foo[1]')).toBe('baz');
+});
+
+test('Array with indices and noAttributesWithArrayNotation option', () => {
+  const formData = serialize(
+    {
+      foo: ['bar', 'baz'],
+    },
+    {
+      indices: true,
+      noAttributesWithArrayNotation: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(2);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', 'bar');
+  expect(formData.append).toHaveBeenNthCalledWith(2, 'foo', 'baz');
+  expect(formData.get('foo')).toBe('bar');
 });
 
 test('Array with allowEmptyArrays option', () => {
