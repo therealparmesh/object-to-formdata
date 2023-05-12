@@ -329,6 +329,22 @@ test('Array with allowEmptyArrays option', () => {
   expect(formData.get('foo[]')).toBe('');
 });
 
+test('Array with allowEmptyArrays and noAttributesWithArrayNotation options', () => {
+  const formData = serialize(
+    {
+      foo: [],
+    },
+    {
+      allowEmptyArrays: true,
+      noAttributesWithArrayNotation: true,
+    },
+  );
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenNthCalledWith(1, 'foo', '');
+  expect(formData.get('foo')).toBe('');
+});
+
 test('Date', () => {
   const foo = new Date(2000, 0, 1, 1, 1, 1);
   const formData = serialize({
