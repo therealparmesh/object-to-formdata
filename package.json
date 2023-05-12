@@ -12,7 +12,7 @@
   "repository": "github:therealparmesh/object-to-formdata",
   "license": "MIT",
   "author": "Parmesh Krishen",
-  "main": "src",
+  "main": "src/index.js",
   "types": "types.d.ts",
   "scripts": {
     "prepare": "pro-commit",
