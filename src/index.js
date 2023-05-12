@@ -22,27 +22,18 @@ function isDate(value) {
   return value instanceof Date;
 }
 
-function isReactNativeBlob(value) {
-  return (
-    typeof new FormData().getParts === 'function' &&
-    isObject(value) &&
-    !isUndefined(value.uri)
-  );
+function isBlob(value, isReactNative) {
+  return isReactNative
+    ? isObject(value) && !isUndefined(value.uri)
+    : isObject(value) &&
+        typeof value.size === 'number' &&
+        typeof value.type === 'string' &&
+        typeof value.slice === 'function';
 }
 
-function isBlob(value) {
+function isFile(value, isReactNative) {
   return (
-    (isObject(value) &&
-      typeof value.size === 'number' &&
-      typeof value.type === 'string' &&
-      typeof value.slice === 'function') ||
-    isReactNativeBlob(value)
-  );
-}
-
-function isFile(value) {
-  return (
-    isBlob(value) &&
+    isBlob(value, isReactNative) &&
     typeof value.name === 'string' &&
     (isObject(value.lastModifiedDate) || typeof value.lastModified === 'number')
   );
@@ -66,6 +57,8 @@ function serialize(obj, cfg, fd, pre) {
   cfg.noFilesWithArrayNotation = initCfg(cfg.noFilesWithArrayNotation);
   cfg.dotsForObjectNotation = initCfg(cfg.dotsForObjectNotation);
 
+  const isReactNative = typeof fd.getParts === 'function';
+
   if (isUndefined(obj)) {
     return fd;
   } else if (isNull(obj)) {
@@ -85,7 +78,7 @@ function serialize(obj, cfg, fd, pre) {
 
         if (
           cfg.noAttributesWithArrayNotation ||
-          (cfg.noFilesWithArrayNotation && isFile(value))
+          (cfg.noFilesWithArrayNotation && isFile(value, isReactNative))
         ) {
           key = pre;
         }
@@ -97,7 +90,7 @@ function serialize(obj, cfg, fd, pre) {
     }
   } else if (isDate(obj)) {
     fd.append(pre, obj.toISOString());
-  } else if (isObject(obj) && !isBlob(obj)) {
+  } else if (isObject(obj) && !isBlob(obj, isReactNative)) {
     Object.keys(obj).forEach((prop) => {
       const value = obj[prop];
 
