@@ -356,6 +356,28 @@ test('Date', () => {
   expect(formData.get('foo')).toBe(foo.toISOString());
 });
 
+test('Date with timezone', () => {
+  const toTzIsoString = (date) => {
+    const off    = date.getTimezoneOffset();
+    const absoff = Math.abs(off);
+    return (new Date(date.getTime() - off*60*1000).toISOString().substr(0,23) +
+            (off > 0 ? '-' : '+') + 
+            Math.floor(absoff / 60).toFixed(0).padStart(2,'0') + ':' + 
+            (absoff % 60).toString().padStart(2,'0'))
+  }
+  const foo = new Date(2000, 0, 1, 1, 1, 1);
+  const formData = serialize({
+    foo,
+  },
+  {
+    dateWithTimezone: true,
+  });
+
+  expect(formData.append).toHaveBeenCalledTimes(1);
+  expect(formData.append).toHaveBeenCalledWith('foo', toTzIsoString(foo));
+  expect(formData.get('foo')).toBe(toTzIsoString(foo));
+});
+
 test('File', () => {
   const foo = new File([], '');
   const formData = serialize({

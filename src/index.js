@@ -39,6 +39,15 @@ function isFile(value, isReactNative) {
   );
 }
 
+function toTzIsoString(date) {
+    const off    = date.getTimezoneOffset();
+    const absoff = Math.abs(off);
+    return (new Date(date.getTime() - off*60*1000).toISOString().substr(0,23) +
+            (off > 0 ? '-' : '+') + 
+            Math.floor(absoff / 60).toFixed(0).padStart(2,'0') + ':' + 
+            (absoff % 60).toString().padStart(2,'0'))
+}
+
 function initCfg(value) {
   return isUndefined(value) ? false : value;
 }
@@ -56,6 +65,7 @@ function serialize(obj, cfg, fd, pre) {
   );
   cfg.noFilesWithArrayNotation = initCfg(cfg.noFilesWithArrayNotation);
   cfg.dotsForObjectNotation = initCfg(cfg.dotsForObjectNotation);
+  cfg.dateWithTimezone = initCfg(cfg.dateWithTimezone);
 
   const isReactNative = typeof fd.getParts === 'function';
 
@@ -89,7 +99,11 @@ function serialize(obj, cfg, fd, pre) {
       fd.append(cfg.noAttributesWithArrayNotation ? pre : pre + '[]', '');
     }
   } else if (isDate(obj)) {
-    fd.append(pre, obj.toISOString());
+    if (cfg.dateWithTimezone) {
+      fd.append(pre, toTzIsoString(obj));
+    } else {
+      fd.append(pre, obj.toISOString());
+    }
   } else if (isObject(obj) && !isBlob(obj, isReactNative)) {
     Object.keys(obj).forEach((prop) => {
       const value = obj[prop];
