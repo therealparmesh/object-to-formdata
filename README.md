@@ -30,7 +30,7 @@ const object = {
 const options = {
   /**
    * include array indices in FormData keys
-   * defaults to false
+   * defaults to false, should be set to true for Asp.Net Core API array serialization
    */
   indices: false,
 
