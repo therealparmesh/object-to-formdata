@@ -8,8 +8,8 @@ export type Options = {
   dotsForObjectNotation?: boolean;
 };
 
-export function serialize<T = {}>(
-  object: T,
+export function serialize(
+  object?: unknown,
   options?: Options,
   existingFormData?: FormData,
   keyPrefix?: string,
