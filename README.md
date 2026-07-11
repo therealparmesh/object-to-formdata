@@ -1,82 +1,136 @@
 # object-to-formdata
 
-> Convenient JavaScript function that serializes Objects to FormData instances.
+[![npm version](https://img.shields.io/npm/v/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
+[![npm downloads](https://img.shields.io/npm/dt/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
+[![Bun CI](https://github.com/therealparmesh/object-to-formdata/actions/workflows/bun.yaml/badge.svg)](https://github.com/therealparmesh/object-to-formdata/actions/workflows/bun.yaml)
+[![license](https://img.shields.io/npm/l/object-to-formdata.svg)](LICENSE)
 
-[![npm](https://img.shields.io/npm/v/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
-[![npm](https://img.shields.io/npm/dt/object-to-formdata.svg)](https://www.npmjs.com/package/object-to-formdata)
+Serialize JavaScript objects into `FormData`. Supports nested objects, arrays,
+dates, files, blobs, and configurable key formatting with no runtime
+dependencies.
 
-## Install
+## Installation
 
 ```sh
 npm install object-to-formdata
 ```
 
+Other package managers:
+
+```sh
+yarn add object-to-formdata
+pnpm add object-to-formdata
+bun add object-to-formdata
+```
+
 ## Usage
 
-**NOTE: STARTING WITH VERSION 4.0.0, THE NAMED EXPORT HAS CHANGED!**
+```js
+import { serialize } from "object-to-formdata";
 
-**NOTE: STARTING WITH VERSION 3.0.0, THERE IS NO DEFAULT EXPORT!**
+const formData = serialize({
+  name: "Ada",
+  active: true,
+  tags: ["admin", "editor"],
+  profile: {
+    age: 36,
+  },
+});
+
+formData.get("name"); // "Ada"
+formData.getAll("tags[]"); // ["admin", "editor"]
+formData.get("profile[age]"); // "36"
+```
+
+CommonJS is also supported:
 
 ```js
-import { serialize } from 'object-to-formdata';
+const { serialize } = require("object-to-formdata");
+```
 
-const object = {
-  /**
-   * key-value mapping
-   * values can be primitives or objects
-   */
-};
+TypeScript declarations are included with the package.
 
-const options = {
-  /**
-   * include array indices in FormData keys
-   * defaults to false
-   */
-  indices: false,
+## API
 
-  /**
-   * treat null values like undefined values and ignore them
-   * defaults to false
-   */
-  nullsAsUndefineds: false,
+### `serialize(object?, options?, existingFormData?, keyPrefix?)`
 
-  /**
-   * convert true or false to 1 or 0 respectively
-   * defaults to false
-   */
-  booleansAsIntegers: false,
+Serializes a value and returns a `FormData` instance.
 
-  /**
-   * store arrays even if they're empty
-   * defaults to false
-   */
-  allowEmptyArrays: false,
+#### `object`
 
-  /**
-   * don't include array notation in FormData keys for any attributes except Files in arrays
-   * defaults to false
-   */
-  noAttributesWithArrayNotation: false,
+The value to serialize. Objects and arrays are traversed recursively. Dates are
+converted to ISO strings, while `File` and `Blob` values are appended directly.
+`undefined` and symbol values are ignored.
 
-  /**
-   * don't include array notation in FormData keys for Files in arrays
-   * defaults to false
-   */
-  noFilesWithArrayNotation: false,
+Circular structures throw a `TypeError`.
 
-  /**
-   * use dots instead of brackets for object notation in FormData keys
-   * defaults to false
-   */
-  dotsForObjectNotation: false,
-};
+#### `options`
 
+| Option                          | Default | Description                                               |
+| ------------------------------- | ------- | --------------------------------------------------------- |
+| `indices`                       | `false` | Include array indices, such as `items[0]`.                 |
+| `nullsAsUndefineds`             | `false` | Ignore `null` values instead of appending an empty string. |
+| `booleansAsIntegers`            | `false` | Serialize booleans as `1` or `0`.                         |
+| `allowEmptyArrays`              | `false` | Append an empty string for empty arrays.                   |
+| `noAttributesWithArrayNotation` | `false` | Omit array notation from non-file array keys.              |
+| `noFilesWithArrayNotation`      | `false` | Omit array notation from file array keys.                  |
+| `dotsForObjectNotation`         | `false` | Use dots instead of brackets for nested object keys.       |
+
+```js
 const formData = serialize(
-  object,
-  options, // optional
-  existingFormData, // optional
-  keyPrefix, // optional
+  {
+    users: [{ name: "Ada" }, { name: "Grace" }],
+  },
+  {
+    indices: true,
+    dotsForObjectNotation: true,
+  },
 );
 
-console.log(formData);
+formData.get("users[0].name"); // "Ada"
 ```
+
+#### `existingFormData`
+
+An existing `FormData` instance to append to. The same instance is returned.
+
+```js
+const formData = new FormData();
+formData.append("token", "abc123");
+
+serialize({ name: "Ada" }, undefined, formData);
+```
+
+#### `keyPrefix`
+
+An optional prefix for generated keys.
+
+```js
+const formData = serialize({ name: "Ada" }, undefined, undefined, "user");
+
+formData.get("user[name]"); // "Ada"
+```
+
+## Runtime requirements
+
+The runtime must provide `FormData`, either globally or through the
+`existingFormData` argument. Modern browsers and supported Node.js releases
+provide a global implementation.
+
+## Development
+
+Run the test suite:
+
+```sh
+bun run test
+```
+
+Inspect the package contents before publishing:
+
+```sh
+bun pm pack --dry-run
+```
+
+## License
+
+[MIT](LICENSE)
