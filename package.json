@@ -1,6 +1,6 @@
 {
   "name": "object-to-formdata",
-  "version": "4.5.1",
+  "version": "5.0.0",
   "description": "Serialize JavaScript objects into FormData.",
   "keywords": [
     "form",
