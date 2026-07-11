@@ -1,6 +1,7 @@
 {
   "name": "object-to-formdata",
   "version": "4.5.1",
+  "description": "Serialize JavaScript objects into FormData.",
   "keywords": [
     "form",
     "formdata",
@@ -9,27 +10,29 @@
     "object-to-formdata",
     "submit"
   ],
-  "repository": "github:therealparmesh/object-to-formdata",
   "license": "MIT",
   "author": "Parmesh Krishen",
-  "main": "src/index.js",
+  "repository": "github:therealparmesh/object-to-formdata",
+  "files": [
+    "dist/index.cjs",
+    "src/index.js",
+    "types.d.ts"
+  ],
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "src/index.js",
   "types": "types.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types.d.ts",
+      "import": "./src/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
-    "prepare": "pro-commit",
-    "pro-commit:task": "pretty-quick --staged",
-    "test": "jest --coverage"
+    "postpack": "rm -rf dist",
+    "prepack": "bun build src/index.js --format=cjs --outfile=dist/index.cjs",
+    "test": "bun test --coverage"
   },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
-  "jest": {
-    "testEnvironment": "jsdom"
-  },
-  "devDependencies": {
-    "jest": "^27.4.7",
-    "prettier": "^2.8.1",
-    "pretty-quick": "^3.1.3",
-    "pro-commit": "^1.2.3"
-  }
+  "packageManager": "bun@1.3.14"
 }
